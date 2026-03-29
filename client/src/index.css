@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, rgba(15, 23, 42, 0.85), rgba(2, 6, 23, 0.98));
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out both;
+}
+
+.animate-glow-in {
+  animation: glow-in 0.6s ease-out both;
+}

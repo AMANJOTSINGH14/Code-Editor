@@ -1,0 +1,43 @@
+{
+  "name": "collab-code-editor-server",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "test": "cross-env NODE_ENV=test jest --runInBand",
+    "embed:rag": "node src/scripts/embed-rag.js"
+  },
+  "dependencies": {
+    "@langchain/community": "^0.2.0",
+    "@langchain/core": "^0.2.0",
+    "@langchain/google-genai": "^0.0.16",
+    "@socket.io/redis-adapter": "^8.3.0",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "ioredis": "^5.4.1",
+    "jsonwebtoken": "^9.0.2",
+    "langchain": "^0.2.0",
+    "mongoose": "^8.3.0",
+    "morgan": "^1.10.0",
+    "redlock": "^4.2.0",
+    "socket.io": "^4.7.5",
+    "winston": "^3.13.0",
+    "y-protocols": "^1.0.6",
+    "yjs": "^13.6.14",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^11.0.1",
+    "nodemon": "^3.1.0",
+    "socket.io-client": "^4.7.5",
+    "supertest": "^7.0.0"
+  }
+}
