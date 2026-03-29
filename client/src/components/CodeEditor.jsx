@@ -40,13 +40,19 @@ function decodeUpdate(data) {
  * @param {Object} props.user - Current user.
  * @param {string} props.language - Language id.
  * @param {Function} props.onChange - Content change callback.
+ * @param {Function} [props.onTypingUsersChange] - Typing users change callback.
  * @returns {JSX.Element} Editor component.
  */
-export default function CodeEditor({ documentId, socket, user, language, onChange }) {
+export default function CodeEditor({ documentId, socket, user, language, onChange, onTypingUsersChange }) {
   const editorRef = useRef(null);
   const bindingRef = useRef(null);
   const docRef = useRef(null);
   const awarenessRef = useRef(null);
+  const typingTimeoutRef = useRef(null);
+  const isTypingRef = useRef(false);
+  const cursorLineRef = useRef(1);
+  const cursorListenerRef = useRef(null);
+  const typingDecorationsRef = useRef([]);
   const [ready, setReady] = useState(false);
 
   const editorOptions = useMemo(
@@ -70,6 +76,19 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
     setReady(false);
 
     return () => {
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+        typingTimeoutRef.current = null;
+      }
+      isTypingRef.current = false;
+      cursorLineRef.current = 1;
+      if (cursorListenerRef.current) {
+        cursorListenerRef.current.dispose();
+        cursorListenerRef.current = null;
+      }
+      if (editorRef.current) {
+        typingDecorationsRef.current = editorRef.current.deltaDecorations(typingDecorationsRef.current, []);
+      }
       if (bindingRef.current) {
         bindingRef.current.destroy();
         bindingRef.current = null;
@@ -92,7 +111,125 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
       name: user.name,
       color: getUserColor(user.id)
     });
+    awarenessRef.current.setLocalStateField("typing", false);
+    awarenessRef.current.setLocalStateField("cursorLine", cursorLineRef.current);
   }, [user, documentId]);
+
+  const updateTypingDecorations = useCallback(() => {
+    const editor = editorRef.current;
+    const awareness = awarenessRef.current;
+    if (!editor || !awareness) {
+      return;
+    }
+
+    const states = Array.from(awareness.getStates().values());
+    const seen = new Set();
+    const decorations = [];
+
+    states.forEach((state) => {
+      const userState = state?.user;
+      if (!state?.typing || !userState || userState.id === user?.id) {
+        return;
+      }
+
+      const lineNumber = Number(state.cursorLine);
+      if (!Number.isFinite(lineNumber) || lineNumber < 1) {
+        return;
+      }
+
+      if (seen.has(userState.id)) {
+        return;
+      }
+      seen.add(userState.id);
+
+      const name = userState.name || "Someone";
+
+      decorations.push({
+        range: {
+          startLineNumber: lineNumber,
+          startColumn: 1,
+          endLineNumber: lineNumber,
+          endColumn: 1
+        },
+        options: {
+          isWholeLine: false,
+          after: {
+            contentText: `  ${name} typing`,
+            inlineClassName: "typing-line-label",
+            inlineClassNameAffectsLetterSpacing: true
+          }
+        }
+      });
+    });
+
+    typingDecorationsRef.current = editor.deltaDecorations(typingDecorationsRef.current, decorations);
+  }, [user?.id]);
+
+  const emitTypingUsers = useCallback(() => {
+    if (!awarenessRef.current) {
+      return;
+    }
+
+    if (onTypingUsersChange) {
+      const states = Array.from(awarenessRef.current.getStates().values());
+      const unique = new Map();
+
+      states.forEach((state) => {
+        const userState = state?.user;
+        if (!state?.typing || !userState) {
+          return;
+        }
+        if (userState.id === user?.id) {
+          return;
+        }
+        if (!unique.has(userState.id)) {
+          unique.set(userState.id, {
+            id: userState.id,
+            name: userState.name || "Someone",
+            color: userState.color
+          });
+        }
+      });
+
+      onTypingUsersChange(Array.from(unique.values()));
+    }
+
+    updateTypingDecorations();
+  }, [onTypingUsersChange, updateTypingDecorations, user?.id]);
+
+  const updateCursorLine = useCallback((lineNumber) => {
+    if (!awarenessRef.current || !user) {
+      return;
+    }
+    if (cursorLineRef.current === lineNumber) {
+      return;
+    }
+    cursorLineRef.current = lineNumber;
+    awarenessRef.current.setLocalStateField("cursorLine", lineNumber);
+  }, [user]);
+
+  const setLocalTyping = useCallback(() => {
+    if (!awarenessRef.current || !user) {
+      return;
+    }
+
+    if (!isTypingRef.current) {
+      awarenessRef.current.setLocalStateField("cursorLine", cursorLineRef.current);
+      awarenessRef.current.setLocalStateField("typing", true);
+      isTypingRef.current = true;
+    }
+
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
+    }
+
+    typingTimeoutRef.current = setTimeout(() => {
+      if (awarenessRef.current) {
+        awarenessRef.current.setLocalStateField("typing", false);
+      }
+      isTypingRef.current = false;
+    }, 1200);
+  }, [user]);
 
   useEffect(() => {
     if (!socket || !docRef.current || !awarenessRef.current) {
@@ -119,6 +256,7 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
         const awarenessUpdate = decodeUpdate(payload.awareness);
         applyAwarenessUpdate(awarenessRef.current, awarenessUpdate, "remote");
       }
+      emitTypingUsers();
       if (onChange) {
         onChange(docRef.current.getText("content").toString());
       }
@@ -137,6 +275,7 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
       if (payload.documentId !== documentId || !awarenessRef.current) return;
       const update = decodeUpdate(payload.update);
       applyAwarenessUpdate(awarenessRef.current, update, "remote");
+      emitTypingUsers();
     };
 
     socket.on("sync:full", handleFull);
@@ -152,7 +291,7 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
       socket.off("awareness:update", handleAwareness);
       socket.off("connect", sendStateVector);
     };
-  }, [socket, documentId, onChange]);
+  }, [socket, documentId, onChange, emitTypingUsers]);
 
   useEffect(() => {
     if (!socket || !docRef.current || !awarenessRef.current) {
@@ -164,6 +303,7 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
 
     const handleDocUpdate = (update, origin) => {
       if (origin === "remote") return;
+      setLocalTyping();
       socket.emit("sync:update", {
         documentId,
         update: encodeUpdate(update)
@@ -180,6 +320,7 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
         documentId,
         update: encodeUpdate(update)
       });
+      emitTypingUsers();
     };
 
     doc.on("update", handleDocUpdate);
@@ -189,7 +330,7 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
       doc.off("update", handleDocUpdate);
       awareness.off("update", handleAwarenessUpdate);
     };
-  }, [socket, documentId, onChange]);
+  }, [socket, documentId, onChange, emitTypingUsers, setLocalTyping]);
 
   /**
    * Bind Monaco editor to Yjs document on mount.
@@ -210,9 +351,19 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
 
       const yText = doc.getText("content");
       bindingRef.current = new MonacoBinding(yText, model, new Set([editor]), awareness);
+      if (cursorListenerRef.current) {
+        cursorListenerRef.current.dispose();
+      }
+      cursorListenerRef.current = editor.onDidChangeCursorPosition((event) => {
+        updateCursorLine(event.position.lineNumber);
+      });
+      const position = editor.getPosition();
+      if (position && position.lineNumber) {
+        updateCursorLine(position.lineNumber);
+      }
       setReady(true);
     },
-    [documentId]
+    [documentId, updateCursorLine]
   );
 
   return (

@@ -20,6 +20,9 @@ function registerEditorHandlers(io, socket, wrap) {
   socket.on(
     "sync:update",
     wrap(async ({ documentId, update }) => {
+      if (!socket.rooms.has(documentId)) {
+        return;
+      }
       const updateBinary = decodeUpdate(update);
       await applyUpdate({ documentId, update: updateBinary, actorId: socket.user.id });
       socket.to(documentId).emit("sync:update", { documentId, update });
@@ -29,6 +32,9 @@ function registerEditorHandlers(io, socket, wrap) {
   socket.on(
     "sync:state-vector",
     wrap(async ({ documentId, stateVector }) => {
+      if (!socket.rooms.has(documentId)) {
+        return;
+      }
       const vectorBinary = decodeUpdate(stateVector);
       const update = await encodeStateAsUpdate(documentId, vectorBinary);
       socket.emit("sync:update", {
@@ -41,6 +47,9 @@ function registerEditorHandlers(io, socket, wrap) {
   socket.on(
     "awareness:update",
     wrap(async ({ documentId, update }) => {
+      if (!socket.rooms.has(documentId)) {
+        return;
+      }
       const awarenessBinary = decodeUpdate(update);
       await applyAwareness({ documentId, update: awarenessBinary, origin: socket.id });
       socket.to(documentId).emit("awareness:update", { documentId, update });

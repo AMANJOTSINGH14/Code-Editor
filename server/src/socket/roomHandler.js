@@ -15,13 +15,44 @@ const config = require("../config");
 const presenceFallback = new Map();
 
 /**
+ * Resolve active socket ids for a room.
+ * @param {import("socket.io").Server} io - Socket.io server.
+ * @param {string} documentId - Document id.
+ * @returns {Promise<Set<string>|null>} Active socket ids or null on failure.
+ */
+async function getActiveSocketIds(io, documentId) {
+  try {
+    return await io.in(documentId).allSockets();
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Filter presence entries by active socket ids.
+ * @param {Array<Object>} presence - Presence list.
+ * @param {Set<string>|null} activeSocketIds - Active socket ids.
+ * @returns {Array<Object>} Filtered presence list.
+ */
+function filterPresenceBySockets(presence, activeSocketIds) {
+  if (!activeSocketIds) {
+    return presence || [];
+  }
+  if (activeSocketIds.size === 0) {
+    return [];
+  }
+  return (presence || []).filter((entry) => entry?.socketId && activeSocketIds.has(entry.socketId));
+}
+
+/**
  * Add a user presence to the room store.
  * @param {string} documentId - Document id.
  * @param {string} socketId - Socket id.
  * @param {Object} user - User payload.
+ * @param {Set<string>|null} activeSocketIds - Active socket ids.
  * @returns {Promise<Array<Object>>} Presence list.
  */
-async function addPresence(documentId, socketId, user) {
+async function addPresence(documentId, socketId, user, activeSocketIds) {
   const presence = {
     id: user.id,
     name: user.name,
@@ -36,11 +67,27 @@ async function addPresence(documentId, socketId, user) {
     await redis.redisClient.setex(`${config.redisPrefix}:user:${user.id}:room`, 60 * 60, documentId);
 
     const entries = await redis.redisClient.hgetall(roomKey);
+    if (activeSocketIds && activeSocketIds.size > 0) {
+      const staleSocketIds = Object.keys(entries).filter((entrySocketId) => !activeSocketIds.has(entrySocketId));
+      if (staleSocketIds.length > 0) {
+        await redis.redisClient.hdel(roomKey, ...staleSocketIds);
+        staleSocketIds.forEach((entrySocketId) => {
+          delete entries[entrySocketId];
+        });
+      }
+    }
     return Object.values(entries).map((value) => JSON.parse(value));
   }
 
   const roomPresence = presenceFallback.get(documentId) || new Map();
   roomPresence.set(socketId, presence);
+  if (activeSocketIds && activeSocketIds.size > 0) {
+    Array.from(roomPresence.keys()).forEach((entrySocketId) => {
+      if (!activeSocketIds.has(entrySocketId)) {
+        roomPresence.delete(entrySocketId);
+      }
+    });
+  }
   presenceFallback.set(documentId, roomPresence);
   return Array.from(roomPresence.values());
 }
@@ -127,9 +174,12 @@ function registerRoomHandlers(io, socket, wrap) {
       socket.join(documentId);
       await trackSocketJoin(documentId, socket.id);
 
+      const activeSocketIds = await getActiveSocketIds(io, documentId);
+
       const update = await encodeStateAsUpdate(documentId);
       const awareness = await encodeFullAwareness(documentId);
-      const presence = await addPresence(documentId, socket.id, socket.user);
+      const presence = await addPresence(documentId, socket.id, socket.user, activeSocketIds);
+      const filteredPresence = filterPresenceBySockets(presence, activeSocketIds);
 
       socket.emit("sync:full", {
         documentId,
@@ -139,7 +189,7 @@ function registerRoomHandlers(io, socket, wrap) {
 
       io.to(documentId).emit("presence:update", {
         documentId,
-        users: presence
+        users: filteredPresence
       });
     })
   );
@@ -150,9 +200,11 @@ function registerRoomHandlers(io, socket, wrap) {
       socket.leave(documentId);
       await trackSocketLeave(documentId, socket.id);
       const presence = await removePresence(documentId, socket.id);
+      const activeSocketIds = await getActiveSocketIds(io, documentId);
+      const filteredPresence = filterPresenceBySockets(presence, activeSocketIds);
       io.to(documentId).emit("presence:update", {
         documentId,
-        users: presence
+        users: filteredPresence
       });
     })
   );
@@ -165,9 +217,11 @@ function registerRoomHandlers(io, socket, wrap) {
         rooms.map(async (documentId) => {
           await trackSocketLeave(documentId, socket.id);
           const presence = await removePresence(documentId, socket.id);
+          const activeSocketIds = await getActiveSocketIds(io, documentId);
+          const filteredPresence = filterPresenceBySockets(presence, activeSocketIds);
           io.to(documentId).emit("presence:update", {
             documentId,
-            users: presence
+            users: filteredPresence
           });
         })
       );

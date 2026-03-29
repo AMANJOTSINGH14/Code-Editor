@@ -3,6 +3,7 @@ const Document = require("../models/Document");
 const Version = require("../models/Version");
 const ReviewHistory = require("../models/ReviewHistory");
 const AppError = require("../utils/AppError");
+const { emitRoomEvent, getRoomSockets } = require("../socket/emitter");
 const redis = require("../config/redis");
 const config = require("../config");
 
@@ -114,6 +115,7 @@ async function getDocumentById(documentId, userId) {
 async function updateDocument(documentId, userId, updates) {
   const document = await getDocumentById(documentId, userId);
   const isOwner = document.owner.toString() === userId;
+  const wasPublic = document.isPublic;
 
   if (typeof updates.title === "string") {
     if (!isOwner) throw new AppError("Only the owner can rename", 403, "FORBIDDEN");
@@ -128,6 +130,43 @@ async function updateDocument(documentId, userId, updates) {
   }
 
   await document.save();
+
+  if (typeof updates.isPublic === "boolean" && wasPublic !== document.isPublic) {
+    const roomId = document._id.toString();
+
+    emitRoomEvent(roomId, "room:visibility", {
+      documentId: roomId,
+      isPublic: document.isPublic
+    });
+
+    if (!document.isPublic) {
+      const sockets = await getRoomSockets(roomId);
+      const unauthorizedSockets = sockets.filter((socket) => {
+        const socketUserId = socket.user && socket.user.id;
+        return !socketUserId || !canAccessDocument(document, socketUserId);
+      });
+
+      if (unauthorizedSockets.length > 0) {
+        const socketIds = unauthorizedSockets.map((socket) => socket.id);
+        const roomKey = `${config.redisPrefix}:room:${roomId}:presence`;
+
+        if (redis.isRedisReady() && redis.redisClient) {
+          await redis.redisClient.hdel(roomKey, ...socketIds);
+        }
+
+        unauthorizedSockets.forEach((socket) => {
+          socket.leave(roomId);
+          socket.emit("room:kicked", { documentId: roomId, reason: "ROOM_PRIVATE" });
+        });
+
+        if (redis.isRedisReady() && redis.redisClient) {
+          const entries = await redis.redisClient.hgetall(roomKey);
+          const users = Object.values(entries).map((value) => JSON.parse(value));
+          emitRoomEvent(roomId, "presence:update", { documentId: roomId, users });
+        }
+      }
+    }
+  }
 
   if (redis.isRedisReady() && redis.redisClient) {
     await redis.redisClient.del(`${config.redisPrefix}:docs:meta:${userId}`);

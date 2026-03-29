@@ -23,7 +23,24 @@ function emitRoomEvent(roomId, event, payload) {
   ioInstance.to(roomId).emit(event, payload);
 }
 
+/**
+ * Fetch active sockets in a room.
+ * @param {string} roomId - Room identifier.
+ * @returns {Promise<Array<import("socket.io").Socket>>} Room sockets.
+ */
+async function getRoomSockets(roomId) {
+  if (!ioInstance) {
+    return [];
+  }
+  try {
+    return await ioInstance.in(roomId).fetchSockets();
+  } catch {
+    return [];
+  }
+}
+
 module.exports = {
   setSocketServer,
-  emitRoomEvent
+  emitRoomEvent,
+  getRoomSockets
 };

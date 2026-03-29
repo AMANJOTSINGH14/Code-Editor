@@ -23,6 +23,7 @@ export default function Editor() {
   const { socket, connected } = useSocket();
   const { user } = useAuth();
   const [presenceUsers, setPresenceUsers] = useState([]);
+  const [typingUsers, setTypingUsers] = useState([]);
   const [currentContent, setCurrentContent] = useState("");
   const [language, setLanguage] = useState("javascript");
   const [showShare, setShowShare] = useState(false);
@@ -43,7 +44,32 @@ export default function Editor() {
 
     const handlePresence = (payload) => {
       if (payload.documentId !== id) return;
-      setPresenceUsers(payload.users || []);
+      const unique = new Map();
+      (payload.users || []).forEach((presence) => {
+        if (!presence?.id) return;
+        if (!unique.has(presence.id)) {
+          unique.set(presence.id, presence);
+        }
+      });
+      setPresenceUsers(Array.from(unique.values()));
+    };
+
+    const handleVisibility = async (payload) => {
+      if (payload.documentId !== id) return;
+      if (payload.isPublic) {
+        await refresh();
+        return;
+      }
+
+      try {
+        await api.get(`/api/documents/${id}`);
+        await refresh();
+      } catch (error) {
+        socket.emit("room:leave", { documentId: id });
+        setToast("Access revoked. You no longer have access to this room.");
+        setTimeout(() => setToast(""), 5000);
+        navigate("/dashboard");
+      }
     };
 
     const handleRestored = (payload) => {
@@ -56,17 +82,29 @@ export default function Editor() {
       setTimeout(() => setToast(""), 5000);
     };
 
+    const handleKicked = (payload) => {
+      if (payload.documentId !== id) return;
+      socket.emit("room:leave", { documentId: id });
+      setToast("Access revoked. You no longer have access to this room.");
+      setTimeout(() => setToast(""), 5000);
+      navigate("/dashboard");
+    };
+
     socket.on("presence:update", handlePresence);
     socket.on("doc:restored", handleRestored);
     socket.on("error", handleError);
+    socket.on("room:visibility", handleVisibility);
+    socket.on("room:kicked", handleKicked);
 
     return () => {
       socket.emit("room:leave", { documentId: id });
       socket.off("presence:update", handlePresence);
       socket.off("doc:restored", handleRestored);
       socket.off("error", handleError);
+      socket.off("room:visibility", handleVisibility);
+      socket.off("room:kicked", handleKicked);
     };
-  }, [socket, id]);
+  }, [socket, id, refresh, navigate]);
 
   /**
    * Update language setting on server.
@@ -105,6 +143,21 @@ export default function Editor() {
   };
 
   const shareLink = useMemo(() => `${window.location.origin}/editor/${id}`, [id]);
+
+  const typingLabel = useMemo(() => {
+    const others = (typingUsers || []).filter((entry) => entry.id !== user?.id);
+    if (others.length === 0) {
+      return "";
+    }
+    const names = others.map((entry) => entry.name || "Someone");
+    if (names.length === 1) {
+      return `${names[0]} is typing...`;
+    }
+    if (names.length === 2) {
+      return `${names[0]} and ${names[1]} are typing...`;
+    }
+    return `${names[0]} and ${names.length - 1} others are typing...`;
+  }, [typingUsers, user?.id]);
 
   if (docLoading) {
     return (
@@ -153,6 +206,11 @@ export default function Editor() {
         <div className="flex flex-wrap items-center gap-3">
           <LanguageSelector language={language} onChange={handleLanguageChange} />
           <PresenceBar users={presenceUsers} />
+          {typingLabel && (
+            <div className="max-w-[220px] truncate text-[11px] text-slate-500">
+              {typingLabel}
+            </div>
+          )}
           <button
             type="button"
             onClick={handleVisibilityToggle}
@@ -191,6 +249,7 @@ export default function Editor() {
               user={user}
               language={language}
               onChange={setCurrentContent}
+              onTypingUsersChange={setTypingUsers}
             />
           </div>
         </div>
