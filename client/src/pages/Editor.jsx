@@ -19,7 +19,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 export default function Editor() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { document, loading: docLoading, error: docError } = useDocument(id);
+  const { document, loading: docLoading, error: docError, refresh } = useDocument(id);
   const { socket, connected } = useSocket();
   const { user } = useAuth();
   const [presenceUsers, setPresenceUsers] = useState([]);
@@ -28,6 +28,7 @@ export default function Editor() {
   const [showShare, setShowShare] = useState(false);
   const [toast, setToast] = useState("");
   const [activePanel, setActivePanel] = useState("chat");
+  const [visibilityUpdating, setVisibilityUpdating] = useState(false);
 
   useEffect(() => {
     if (document && document.language) {
@@ -81,6 +82,28 @@ export default function Editor() {
     }
   };
 
+  /**
+   * Toggle document visibility (public/private).
+   * @returns {Promise<void>} Resolves when updated.
+   */
+  const handleVisibilityToggle = async () => {
+    if (!document || visibilityUpdating) return;
+
+    const nextIsPublic = !document.isPublic;
+    setVisibilityUpdating(true);
+    try {
+      await api.patch(`/api/documents/${id}`, { isPublic: nextIsPublic });
+      await refresh();
+      setToast(`Room is now ${nextIsPublic ? "public" : "private"}.`);
+    } catch (error) {
+      const status = error?.response?.status;
+      setToast(status === 403 ? "Only the owner can change visibility." : "Failed to update visibility.");
+    } finally {
+      setVisibilityUpdating(false);
+      setTimeout(() => setToast(""), 5000);
+    }
+  };
+
   const shareLink = useMemo(() => `${window.location.origin}/editor/${id}`, [id]);
 
   if (docLoading) {
@@ -130,6 +153,14 @@ export default function Editor() {
         <div className="flex flex-wrap items-center gap-3">
           <LanguageSelector language={language} onChange={handleLanguageChange} />
           <PresenceBar users={presenceUsers} />
+          <button
+            type="button"
+            onClick={handleVisibilityToggle}
+            disabled={!document || visibilityUpdating}
+            className="rounded-full border border-slate-700 px-4 py-1.5 text-xs text-slate-200 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {document?.isPublic ? "Make Private" : "Make Public"}
+          </button>
           <button
             type="button"
             onClick={() => setShowShare(true)}
