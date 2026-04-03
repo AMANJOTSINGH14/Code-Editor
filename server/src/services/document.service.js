@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Document = require("../models/Document");
+const User = require("../models/User");
 const Version = require("../models/Version");
 const ReviewHistory = require("../models/ReviewHistory");
 const AppError = require("../utils/AppError");
@@ -106,6 +107,50 @@ async function getDocumentById(documentId, userId) {
 }
 
 /**
+ * List contributors for a document.
+ * @param {string} documentId - Document id.
+ * @param {string} userId - User id.
+ * @returns {Promise<Array<{id: string, name: string, email: string}>>} Contributors list.
+ */
+async function listContributors(documentId, userId) {
+  const document = await getDocumentById(documentId, userId);
+  const contributorIds = new Set();
+
+  if (document.owner) {
+    contributorIds.add(document.owner.toString());
+  }
+
+  (document.collaborators || []).forEach((collaborator) => {
+    if (collaborator) {
+      contributorIds.add(collaborator.toString());
+    }
+  });
+
+  const docId = document._id.toString();
+  const versionUsers = await Version.distinct("createdBy", { documentId: docId });
+  versionUsers.forEach((id) => contributorIds.add(id.toString()));
+
+  const reviewUsers = await ReviewHistory.distinct("userId", { documentId: docId });
+  reviewUsers.forEach((id) => contributorIds.add(id.toString()));
+
+  const ids = Array.from(contributorIds);
+  if (ids.length === 0) {
+    return [];
+  }
+
+  const contributors = await User.find({ _id: { $in: ids } })
+    .select("name email")
+    .sort({ email: 1 })
+    .lean();
+
+  return contributors.map((entry) => ({
+    id: entry._id.toString(),
+    name: entry.name || "",
+    email: entry.email || ""
+  }));
+}
+
+/**
  * Update a document.
  * @param {string} documentId - Document id.
  * @param {string} userId - User id.
@@ -201,6 +246,7 @@ module.exports = {
   createDocument,
   listDocuments,
   getDocumentById,
+  listContributors,
   updateDocument,
   deleteDocument
 };

@@ -3,6 +3,7 @@ const {
   createDocument,
   listDocuments,
   getDocumentById,
+  listContributors,
   updateDocument,
   deleteDocument
 } = require("../services/document.service");
@@ -63,6 +64,22 @@ const get = asyncHandler(async (req, res) => {
 });
 
 /**
+ * List contributors for a document.
+ * @param {import("express").Request} req - Express request.
+ * @param {import("express").Response} res - Express response.
+ * @returns {Promise<void>} Response promise.
+ */
+const contributors = asyncHandler(async (req, res) => {
+  const contributorsList = await listContributors(req.params.id, req.user.id);
+  res.status(200).json({
+    success: true,
+    data: {
+      contributors: contributorsList
+    }
+  });
+});
+
+/**
  * Update a document.
  * @param {import("express").Request} req - Express request.
  * @param {import("express").Response} res - Express response.
@@ -93,6 +110,7 @@ module.exports = {
   create,
   list,
   get,
+  contributors,
   update,
   remove
 };

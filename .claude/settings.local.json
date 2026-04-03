@@ -6,7 +6,10 @@
       "Bash(npx jest:*)",
       "Bash(npx vitest:*)",
       "Bash(node -e \"const pkg = require\\(''./package.json''\\); console.log\\(''vitest:'', pkg.devDependencies?.vitest || pkg.dependencies?.vitest || ''NOT FOUND''\\); console.log\\(''testing-library/react:'', pkg.devDependencies?.[''@testing-library/react''] || ''NOT FOUND''\\); console.log\\(''testing-library/jest-dom:'', pkg.devDependencies?.[''@testing-library/jest-dom''] || ''NOT FOUND''\\); console.log\\(''jsdom:'', pkg.devDependencies?.jsdom || ''NOT FOUND''\\);\")",
-      "Bash(npx vite:*)"
+      "Bash(npx vite:*)",
+      "Bash(wc -l /c/Users/91962/file1/CODE EDITOR/Code-editor/client/src/**/*.jsx /c/Users/91962/file1/CODE EDITOR/Code-editor/client/src/**/*.js)",
+      "Bash(wc -l /c/Users/91962/file1/CODE EDITOR/Code-editor/server/src/**/*.js)",
+      "Bash(find /c/Users/91962/file1/CODE EDITOR/Code-editor/server/src -name \"*.js\" -type f -exec grep -l \"router\\\\.\" {})"
     ]
   }
 }

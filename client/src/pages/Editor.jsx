@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CodeEditor from "../components/CodeEditor.jsx";
 import PresenceBar from "../components/PresenceBar.jsx";
@@ -24,6 +24,10 @@ export default function Editor() {
   const { user } = useAuth();
   const [presenceUsers, setPresenceUsers] = useState([]);
   const [typingUsers, setTypingUsers] = useState([]);
+  const [contributors, setContributors] = useState([]);
+  const [contributorsOpen, setContributorsOpen] = useState(false);
+  const [contributorsLoading, setContributorsLoading] = useState(false);
+  const [contributorsError, setContributorsError] = useState("");
   const [currentContent, setCurrentContent] = useState("");
   const [language, setLanguage] = useState("javascript");
   const [showShare, setShowShare] = useState(false);
@@ -36,6 +40,24 @@ export default function Editor() {
       setLanguage(document.language);
     }
   }, [document]);
+
+  const fetchContributors = useCallback(async () => {
+    if (!id) return;
+    setContributorsLoading(true);
+    setContributorsError("");
+    try {
+      const response = await api.get(`/api/documents/${id}/contributors`);
+      setContributors(response.data.data.contributors || []);
+    } catch {
+      setContributorsError("Unable to load contributors.");
+    } finally {
+      setContributorsLoading(false);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    fetchContributors();
+  }, [fetchContributors]);
 
   useEffect(() => {
     if (!socket || !id) return;
@@ -206,6 +228,56 @@ export default function Editor() {
         <div className="flex flex-wrap items-center gap-3">
           <LanguageSelector language={language} onChange={handleLanguageChange} />
           <PresenceBar users={presenceUsers} />
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => {
+                const nextOpen = !contributorsOpen;
+                setContributorsOpen(nextOpen);
+                if (nextOpen) {
+                  fetchContributors();
+                }
+              }}
+              className="rounded-full border border-slate-700 px-3 py-1.5 text-[11px] font-semibold text-slate-200 transition hover:bg-slate-800"
+            >
+              Contrib {contributors.length}
+            </button>
+            {contributorsOpen && (
+              <div className="absolute right-0 top-9 z-40 w-72 rounded-2xl border border-slate-800 bg-slate-950/95 p-4 shadow-xl shadow-slate-950/40 backdrop-blur">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                    Contributors
+                  </span>
+                  <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-slate-300">
+                    {contributors.length} total
+                  </span>
+                </div>
+                {contributorsLoading ? (
+                  <div className="mt-3 text-xs text-slate-400">Loading contributors...</div>
+                ) : contributorsError ? (
+                  <div className="mt-3 text-xs text-rose-300">{contributorsError}</div>
+                ) : contributors.length === 0 ? (
+                  <div className="mt-3 text-xs text-slate-500">No contributors yet.</div>
+                ) : (
+                  <div className="mt-3 max-h-40 space-y-2 overflow-auto pr-1">
+                    {contributors.map((contributor) => (
+                      <div
+                        key={contributor.id}
+                        className="flex items-center justify-between rounded-lg border border-slate-800/60 bg-slate-900/40 px-3 py-2"
+                      >
+                        <span className="truncate text-xs text-slate-200">{contributor.email}</span>
+                        {contributor.name && (
+                          <span className="ml-2 text-[10px] uppercase tracking-[0.15em] text-slate-500">
+                            {contributor.name}
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
           {typingLabel && (
             <div className="max-w-[220px] truncate text-[11px] text-slate-500">
               {typingLabel}

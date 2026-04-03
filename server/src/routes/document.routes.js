@@ -2,7 +2,7 @@ const express = require("express");
 const { z } = require("zod");
 const authenticate = require("../middleware/auth");
 const validate = require("../middleware/validate");
-const { create, list, get, update, remove } = require("../controllers/document.controller");
+const { create, list, get, contributors, update, remove } = require("../controllers/document.controller");
 
 const router = express.Router();
 
@@ -40,6 +40,7 @@ const idSchema = z.object({
 
 router.post("/", validate(createSchema), create);
 router.get("/", list);
+router.get("/:id/contributors", validate(idSchema), contributors);
 router.get("/:id", validate(idSchema), get);
 router.patch("/:id", validate(updateSchema), update);
 router.delete("/:id", validate(idSchema), remove);
