@@ -25,7 +25,7 @@ services:
       timeout: 3s
       retries: 5
   chromadb:
-    image: chromadb/chroma:latest
+    image: chromadb/chroma:0.5.23
     container_name: collab-chromadb
     ports:
       - "8000:8000"
@@ -42,8 +42,11 @@ services:
       - MONGO_URI=mongodb://mongo:27017/collab
       - REDIS_URL=redis://redis:6379
       - CHROMA_URL=http://chromadb:8000
+      - RAG_DOCS_PATH=/app/rag-data/sample-docs
     ports:
       - "3001:3001"
+    volumes:
+      - ./rag-data:/app/rag-data:ro
     depends_on:
       mongo:
         condition: service_healthy

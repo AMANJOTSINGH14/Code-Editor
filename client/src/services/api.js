@@ -61,7 +61,10 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const original = error.config;
-    if (error.response && error.response.status === 401 && !original._retry) {
+    // Never attempt token refresh for auth endpoints — avoids interceptor deadlock
+    // when login/register/refresh itself returns 401.
+    const isAuthEndpoint = original?.url?.includes("/api/auth/");
+    if (error.response && error.response.status === 401 && !original._retry && !isAuthEndpoint) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });

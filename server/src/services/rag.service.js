@@ -46,7 +46,7 @@ async function getVectorStore() {
     }
 
     vectorStore = await Chroma.fromExistingCollection(embeddings, {
-      collectionName: "collab-code-editor",
+      collectionName: "collab_rag_v2",
       url: config.chromaUrl
     });
     ragAvailable = true;
@@ -116,7 +116,7 @@ async function embedRagDocuments() {
   const chunks = await splitter.splitDocuments(documents);
 
   vectorStore = await Chroma.fromDocuments(chunks, embeddings, {
-    collectionName: "collab-code-editor",
+    collectionName: "collab_rag_v2",
     url: config.chromaUrl
   });
   ragAvailable = true;

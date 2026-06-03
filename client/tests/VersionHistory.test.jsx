@@ -2,15 +2,15 @@ import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import VersionHistory from "../src/components/VersionHistory.jsx";
 
-vi.mock("@monaco-editor/react", () => ({
+jest.mock("@monaco-editor/react", () => ({
   __esModule: true,
   DiffEditor: () => <div>Diff Editor</div>
 }));
 
-vi.mock("../src/services/api.js", () => ({
+jest.mock("../src/services/api.js", () => ({
   __esModule: true,
   default: {
-    get: vi.fn().mockResolvedValue({
+    get: jest.fn().mockResolvedValue({
       data: {
         data: {
           items: [
@@ -25,7 +25,7 @@ vi.mock("../src/services/api.js", () => ({
         }
       }
     }),
-    post: vi.fn().mockResolvedValue({ data: { data: {} } })
+    post: jest.fn().mockResolvedValue({ data: { data: {} } })
   }
 }));
 

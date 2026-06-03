@@ -9,7 +9,8 @@
       "Bash(npx vite:*)",
       "Bash(wc -l /c/Users/91962/file1/CODE EDITOR/Code-editor/client/src/**/*.jsx /c/Users/91962/file1/CODE EDITOR/Code-editor/client/src/**/*.js)",
       "Bash(wc -l /c/Users/91962/file1/CODE EDITOR/Code-editor/server/src/**/*.js)",
-      "Bash(find /c/Users/91962/file1/CODE EDITOR/Code-editor/server/src -name \"*.js\" -type f -exec grep -l \"router\\\\.\" {})"
+      "Bash(find /c/Users/91962/file1/CODE EDITOR/Code-editor/server/src -name \"*.js\" -type f -exec grep -l \"router\\\\.\" {})",
+      "Bash(Get-ChildItem \"c:\\\\Users\\\\91962\\\\file1\\\\CODE EDITOR\\\\Code-editor\\\\client\\\\tests\" -ErrorAction SilentlyContinue)"
     ]
   }
 }

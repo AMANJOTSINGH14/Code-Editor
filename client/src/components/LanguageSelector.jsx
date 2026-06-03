@@ -1,6 +1,6 @@
 import React from "react";
 
-const languages = ["javascript", "typescript", "python", "java", "go", "rust", "csharp"];
+const languages = ["javascript", "typescript", "python", "java", "cpp", "csharp", "go", "rust", "swift"];
 
 /**
  * Language selector component.

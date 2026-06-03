@@ -116,9 +116,11 @@ export default function Dashboard() {
               <option value="typescript">TypeScript</option>
               <option value="python">Python</option>
               <option value="java">Java</option>
+              <option value="cpp">C++</option>
+              <option value="csharp">C#</option>
               <option value="go">Go</option>
               <option value="rust">Rust</option>
-              <option value="csharp">C#</option>
+              <option value="swift">Swift</option>
             </select>
             <button
               type="button"

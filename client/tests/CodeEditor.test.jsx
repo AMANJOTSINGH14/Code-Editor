@@ -2,18 +2,23 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import CodeEditor from "../src/components/CodeEditor.jsx";
 
-vi.mock("@monaco-editor/react", () => ({
+jest.mock("@monaco-editor/react", () => ({
   __esModule: true,
   default: ({ onMount }) => {
     if (onMount) {
-      onMount({ getModel: () => ({}) });
+      onMount({
+        getModel: () => ({}),
+        deltaDecorations: jest.fn(() => []),
+        getOption: jest.fn(),
+        updateOptions: jest.fn()
+      });
     }
     return <div data-testid="monaco" />;
   }
 }));
 
-vi.mock("y-monaco", () => ({
-  MonacoBinding: vi.fn()
+jest.mock("y-monaco", () => ({
+  MonacoBinding: jest.fn()
 }));
 
 test("renders monaco editor", () => {

@@ -2,12 +2,12 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import ReviewPanel from "../src/components/ReviewPanel.jsx";
 
-vi.mock("../src/hooks/useReview.js", () => ({
+jest.mock("../src/hooks/useReview.js", () => ({
   useReview: () => ({
     reviewText: "Review output",
     loading: false,
     notice: "",
-    startReview: vi.fn()
+    startReview: jest.fn()
   })
 }));
 

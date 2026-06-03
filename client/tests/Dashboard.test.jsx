@@ -4,12 +4,14 @@ import Dashboard from "../src/pages/Dashboard.jsx";
 import { AuthProvider } from "../src/context/AuthContext.jsx";
 import { BrowserRouter } from "react-router-dom";
 
-vi.mock("../src/services/api.js", () => ({
+jest.mock("../src/services/api.js", () => ({
+  __esModule: true,
   default: {
-    get: vi.fn().mockResolvedValue({ data: { data: { documents: [{ id: "1", title: "Doc", language: "js" }] } } }),
-    interceptors: { response: { use: vi.fn() } }
+    get: jest.fn().mockResolvedValue({ data: { data: { documents: [{ id: "1", title: "Doc", language: "js" }] } } }),
+    interceptors: { response: { use: jest.fn() } }
   },
-  onInterceptorRefresh: vi.fn()
+  setAccessToken: jest.fn(),
+  onInterceptorRefresh: jest.fn()
 }));
 
 /**
