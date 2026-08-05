@@ -1,0 +1,31 @@
+# Sandbox image for agent-generated code.
+#
+#   docker build -f server/src/agent-runner/sandbox/Dockerfile.agent-sandbox \
+#                -t agent-sandbox:node20 .
+#
+# Deliberately minimal. The image ships no application dependencies at all:
+# containers run with NetworkMode 'none', so `npm install` at runtime is
+# impossible by construction, and generated programs are restricted to the Node
+# standard library. That is a feature — it keeps the attack surface to what ships
+# in node:20-alpine and makes runs reproducible.
+#
+# Everything else that makes this a sandbox (read-only rootfs, tmpfs workspace,
+# dropped capabilities, memory/CPU/PID limits, no-new-privileges) is applied at
+# container-create time by executor.js, not here. An image cannot enforce those.
+FROM node:20-alpine
+
+# node:20-alpine already ships an unprivileged `node` user at uid/gid 1000, which
+# is the uid executor.js runs containers as. Asserting it here means a base-image
+# change that alters the uid fails the build instead of silently running the
+# sandbox as root.
+RUN [ "$(id -u node)" = "1000" ] || (echo "expected uid 1000 for user node" && exit 1)
+
+# Matches the tmpfs mount point executor.js creates. Generated source is written
+# here at runtime; nothing is baked into the image.
+WORKDIR /workspace
+
+USER 1000:1000
+
+# Overridden on every run. Present so a container started without an explicit
+# command exits immediately rather than idling.
+CMD ["node", "--version"]

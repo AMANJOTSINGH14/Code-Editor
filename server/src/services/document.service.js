@@ -4,7 +4,7 @@ const User = require("../models/User");
 const Version = require("../models/Version");
 const ReviewHistory = require("../models/ReviewHistory");
 const AppError = require("../utils/AppError");
-const { emitRoomEvent, getRoomSockets } = require("../socket/emitter");
+const { emitRoomEvent, getLocalRoomSockets } = require("../socket/emitter");
 const redis = require("../config/redis");
 const config = require("../config");
 
@@ -28,6 +28,32 @@ function canAccessDocument(document, userId) {
 }
 
 /**
+ * Invalidate the cached document list for one user.
+ * @param {string} userId - User ID.
+ * @returns {Promise<void>} Resolves when cleared.
+ */
+async function invalidateUserDocsCache(userId) {
+  if (redis.isRedisReady() && redis.redisClient) {
+    await redis.redisClient.del(`${config.redisPrefix}:docs:meta:${userId}`);
+  }
+}
+
+/**
+ * Invalidate cached document lists for the owner and every collaborator.
+ * @param {Object} document - Document object.
+ * @returns {Promise<void>} Resolves when cleared.
+ */
+async function invalidateDocListCaches(document) {
+  const ids = new Set([document.owner.toString()]);
+  (document.collaborators || []).forEach((collaborator) => {
+    if (collaborator) {
+      ids.add(collaborator.toString());
+    }
+  });
+  await Promise.all(Array.from(ids).map((id) => invalidateUserDocsCache(id)));
+}
+
+/**
  * Create a new document.
  * @param {Object} payload - Document data.
  * @param {string} payload.title - Document title.
@@ -48,15 +74,15 @@ async function createDocument({ title, language, ownerId, isPublic }) {
     collaborators: []
   });
 
-  if (redis.isRedisReady() && redis.redisClient) {
-    await redis.redisClient.del(`${config.redisPrefix}:docs:meta:${ownerId}`);
-  }
+  await invalidateUserDocsCache(ownerId);
 
   return document;
 }
 
 /**
- * List accessible documents for a user.
+ * List a user's own documents (owned or shared with them).
+ * Public documents owned by others are reachable by link but are not listed
+ * here, so the dashboard only shows the user's own rooms.
  * @param {string} userId - User ID.
  * @returns {Promise<Array<Object>>} Document metadata list.
  */
@@ -71,7 +97,7 @@ async function listDocuments(userId) {
   }
 
   const documents = await Document.find({
-    $or: [{ owner: userId }, { collaborators: userId }, { isPublic: true }]
+    $or: [{ owner: userId }, { collaborators: userId }]
   }).sort({ updatedAt: -1 });
 
   const metadata = documents.map((doc) => doc.toMeta());
@@ -104,6 +130,18 @@ async function getDocumentById(documentId, userId) {
   }
 
   return document;
+}
+
+/**
+ * Open a document for viewing/editing. Access is strict: only the owner,
+ * collaborators, or anyone while the doc is public. Private docs are not
+ * joinable by others (and connected non-members are kicked on going private).
+ * @param {string} documentId - Document id.
+ * @param {string} userId - User id.
+ * @returns {Promise<Object>} Document.
+ */
+async function openDocument(documentId, userId) {
+  return getDocumentById(documentId, userId);
 }
 
 /**
@@ -179,43 +217,28 @@ async function updateDocument(documentId, userId, updates) {
   if (typeof updates.isPublic === "boolean" && wasPublic !== document.isPublic) {
     const roomId = document._id.toString();
 
+    // Tell connected clients the visibility changed (refresh badge / access).
     emitRoomEvent(roomId, "room:visibility", {
       documentId: roomId,
       isPublic: document.isPublic
     });
 
+    // When a room becomes private, kick out anyone connected who is no longer
+    // allowed in (not the owner and not a collaborator).
     if (!document.isPublic) {
-      const sockets = await getRoomSockets(roomId);
-      const unauthorizedSockets = sockets.filter((socket) => {
+      getLocalRoomSockets(roomId).forEach((socket) => {
         const socketUserId = socket.user && socket.user.id;
-        return !socketUserId || !canAccessDocument(document, socketUserId);
-      });
-
-      if (unauthorizedSockets.length > 0) {
-        const socketIds = unauthorizedSockets.map((socket) => socket.id);
-        const roomKey = `${config.redisPrefix}:room:${roomId}:presence`;
-
-        if (redis.isRedisReady() && redis.redisClient) {
-          await redis.redisClient.hdel(roomKey, ...socketIds);
-        }
-
-        unauthorizedSockets.forEach((socket) => {
+        if (!socketUserId || !canAccessDocument(document, socketUserId)) {
           socket.leave(roomId);
           socket.emit("room:kicked", { documentId: roomId, reason: "ROOM_PRIVATE" });
-        });
-
-        if (redis.isRedisReady() && redis.redisClient) {
-          const entries = await redis.redisClient.hgetall(roomKey);
-          const users = Object.values(entries).map((value) => JSON.parse(value));
-          emitRoomEvent(roomId, "presence:update", { documentId: roomId, users });
         }
-      }
+      });
     }
   }
 
-  if (redis.isRedisReady() && redis.redisClient) {
-    await redis.redisClient.del(`${config.redisPrefix}:docs:meta:${userId}`);
-  }
+  // Visibility/title/language changes affect the dashboard for the owner and
+  // every collaborator, so clear all of their cached lists.
+  await invalidateDocListCaches(document);
 
   return document;
 }
@@ -236,9 +259,7 @@ async function deleteDocument(documentId, userId) {
   await Version.deleteMany({ documentId });
   await ReviewHistory.deleteMany({ documentId });
 
-  if (redis.isRedisReady() && redis.redisClient) {
-    await redis.redisClient.del(`${config.redisPrefix}:docs:meta:${userId}`);
-  }
+  await invalidateDocListCaches(document);
 }
 
 module.exports = {
@@ -246,6 +267,7 @@ module.exports = {
   createDocument,
   listDocuments,
   getDocumentById,
+  openDocument,
   listContributors,
   updateDocument,
   deleteDocument

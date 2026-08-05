@@ -43,10 +43,23 @@ services:
       - REDIS_URL=redis://redis:6379
       - CHROMA_URL=http://chromadb:8000
       - RAG_DOCS_PATH=/app/rag-data/sample-docs
+      # AGENT_RUNNER_START
+      # Sandbox containers are SIBLINGS of this one (they are created on the host
+      # daemon), so a bind mount source must be a HOST path, not a path inside
+      # this container. ${PWD} is the host's compose directory.
+      - AGENT_RUNNER_ARTIFACTS_PATH=/app/artifacts
+      - AGENT_RUNNER_ARTIFACTS_HOST_PATH=${PWD}/artifacts
+      # AGENT_RUNNER_END
     ports:
       - "3001:3001"
     volumes:
       - ./rag-data:/app/rag-data:ro
+      # AGENT_RUNNER_START
+      # Docker socket: lets the runner start sandbox containers on the HOST
+      # daemon. This is root-equivalent access to the host — see SECURITY.md.
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./artifacts:/app/artifacts
+      # AGENT_RUNNER_END
     depends_on:
       mongo:
         condition: service_healthy

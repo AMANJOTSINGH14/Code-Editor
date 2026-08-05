@@ -1,0 +1,24 @@
+{
+  "serviceCount": 3,
+  "totalReplicas": 9,
+  "services": [
+    {
+      "name": "api-gateway",
+      "replicas": 3,
+      "envCount": 3,
+      "hasHealthcheck": true
+    },
+    {
+      "name": "worker",
+      "replicas": 5,
+      "envCount": 2,
+      "hasHealthcheck": false
+    },
+    {
+      "name": "scheduler",
+      "replicas": 1,
+      "envCount": 1,
+      "hasHealthcheck": true
+    }
+  ]
+}

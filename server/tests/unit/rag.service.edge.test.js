@@ -8,11 +8,13 @@ const {
   selectRelevantChunk,
   buildReviewPrompt,
   retrieveContext,
-  setVectorStoreForTest
+  setVectorStoreForTest,
+  setEmbeddingsClientForTest
 } = require("../../src/services/rag.service");
 
 afterEach(() => {
   setVectorStoreForTest(null);
+  setEmbeddingsClientForTest(null);
 });
 
 // ── estimateTokens edge cases ──
@@ -247,60 +249,83 @@ describe("buildReviewPrompt", () => {
 // ── retrieveContext edge cases ──
 
 describe("retrieveContext", () => {
-  test("returns empty array when vector store is null", async () => {
-    setVectorStoreForTest(null);
+  const mockEmbeddings = {
+    embedQuery: async () => [0, 0, 0],
+    embedDocuments: async (texts) => texts.map(() => [0, 0, 0])
+  };
+
+  // Build a mock store whose collection.query() returns the given Chroma result.
+  function storeReturning(result) {
+    return { ensureCollection: async () => ({ query: async () => result }) };
+  }
+
+  beforeEach(() => {
+    setEmbeddingsClientForTest(mockEmbeddings);
+  });
+
+  test("returns empty array when the collection is unavailable", async () => {
+    setVectorStoreForTest({
+      ensureCollection: async () => {
+        throw new Error("ChromaDB connection failed");
+      }
+    });
     const result = await retrieveContext("query");
     expect(result).toEqual([]);
   });
 
   test("returns mapped results from vector store", async () => {
-    const mockStore = {
-      similaritySearchWithScore: async () => [
-        [{ pageContent: "Content A", metadata: { chunkId: "id-a" } }, 0.95],
-        [{ pageContent: "Content B", metadata: { chunkId: "id-b" } }, 0.80]
-      ]
-    };
-    setVectorStoreForTest(mockStore);
+    setVectorStoreForTest(
+      storeReturning({
+        ids: [["id-a", "id-b"]],
+        documents: [["Content A", "Content B"]],
+        metadatas: [[{ chunkId: "id-a" }, { chunkId: "id-b" }]],
+        distances: [[0.95, 0.8]]
+      })
+    );
 
     const result = await retrieveContext("query", 2);
     expect(result).toHaveLength(2);
     expect(result[0]).toEqual({ chunkId: "id-a", content: "Content A", score: 0.95 });
-    expect(result[1]).toEqual({ chunkId: "id-b", content: "Content B", score: 0.80 });
+    expect(result[1]).toEqual({ chunkId: "id-b", content: "Content B", score: 0.8 });
   });
 
   test("uses default topK of 3", async () => {
     let capturedTopK;
-    const mockStore = {
-      similaritySearchWithScore: async (query, topK) => {
-        capturedTopK = topK;
-        return [];
-      }
-    };
-    setVectorStoreForTest(mockStore);
+    setVectorStoreForTest({
+      ensureCollection: async () => ({
+        query: async (params) => {
+          capturedTopK = params.nResults;
+          return { ids: [[]], documents: [[]], metadatas: [[]], distances: [[]] };
+        }
+      })
+    });
 
     await retrieveContext("query");
     expect(capturedTopK).toBe(3);
   });
 
-  test("returns empty array when vector store throws", async () => {
-    const mockStore = {
-      similaritySearchWithScore: async () => {
-        throw new Error("ChromaDB connection failed");
-      }
-    };
-    setVectorStoreForTest(mockStore);
+  test("returns empty array when the query throws", async () => {
+    setVectorStoreForTest({
+      ensureCollection: async () => ({
+        query: async () => {
+          throw new Error("ChromaDB connection failed");
+        }
+      })
+    });
 
     const result = await retrieveContext("query");
     expect(result).toEqual([]);
   });
 
   test("generates fallback chunkId when metadata missing", async () => {
-    const mockStore = {
-      similaritySearchWithScore: async () => [
-        [{ pageContent: "No metadata chunk", metadata: {} }, 0.5]
-      ]
-    };
-    setVectorStoreForTest(mockStore);
+    setVectorStoreForTest(
+      storeReturning({
+        ids: [[null]],
+        documents: [["No metadata chunk"]],
+        metadatas: [[{}]],
+        distances: [[0.5]]
+      })
+    );
 
     const result = await retrieveContext("query");
     expect(result[0].chunkId).toBe("chunk-0");
@@ -308,24 +333,26 @@ describe("retrieveContext", () => {
   });
 
   test("handles empty results from vector store", async () => {
-    const mockStore = {
-      similaritySearchWithScore: async () => []
-    };
-    setVectorStoreForTest(mockStore);
+    setVectorStoreForTest(
+      storeReturning({ ids: [[]], documents: [[]], metadatas: [[]], distances: [[]] })
+    );
 
     const result = await retrieveContext("query");
     expect(result).toEqual([]);
   });
 
-  test("passes query string to vector store", async () => {
+  test("passes query string to the embeddings client", async () => {
     let capturedQuery;
-    const mockStore = {
-      similaritySearchWithScore: async (query) => {
-        capturedQuery = query;
-        return [];
-      }
-    };
-    setVectorStoreForTest(mockStore);
+    setEmbeddingsClientForTest({
+      embedQuery: async (text) => {
+        capturedQuery = text;
+        return [0, 0, 0];
+      },
+      embedDocuments: async (texts) => texts.map(() => [0, 0, 0])
+    });
+    setVectorStoreForTest(
+      storeReturning({ ids: [[]], documents: [[]], metadatas: [[]], distances: [[]] })
+    );
 
     await retrieveContext("function handleLogin() {}");
     expect(capturedQuery).toBe("function handleLogin() {}");

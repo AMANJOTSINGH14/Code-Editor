@@ -1,0 +1,24 @@
+{
+  "serviceCount": 3,
+  "totalReplicas": 3,
+  "services": [
+    {
+      "name": "api-gateway",
+      "replicas": 3,
+      "envCount": 0,
+      "hasHealthcheck": false
+    },
+    {
+      "name": "env",
+      "replicas": 0,
+      "envCount": 3,
+      "hasHealthcheck": false
+    },
+    {
+      "name": "healthcheck",
+      "replicas": 0,
+      "envCount": 0,
+      "hasHealthcheck": false
+    }
+  ]
+}

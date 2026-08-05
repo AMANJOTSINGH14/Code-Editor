@@ -29,7 +29,12 @@ export default function VersionHistory({ documentId, currentContent, language })
     setError("");
     try {
       const response = await api.get(`/api/documents/${documentId}/versions?page=1&limit=50`);
-      setVersions(response.data.data.items || []);
+      // Defensive newest-first sort so the latest save is always at the top,
+      // regardless of the order the API returns.
+      const items = [...(response.data.data.items || [])].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt) || b.versionNumber - a.versionNumber
+      );
+      setVersions(items);
     } catch {
       setError("Failed to load versions");
     } finally {

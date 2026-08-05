@@ -1,0 +1,35 @@
+{
+  "rowCount": 5,
+  "rows": [
+    {
+      "product": "Bolt, hex M8",
+      "units": 250,
+      "total": 187.5,
+      "unitPrice": 0.75
+    },
+    {
+      "product": "Washer \"flat\" M8",
+      "units": 500,
+      "total": 95,
+      "unitPrice": 0.19
+    },
+    {
+      "product": "Bracket L-90",
+      "units": 75,
+      "total": 412.25,
+      "unitPrice": 5.4967
+    },
+    {
+      "product": "Nut, nylon-insert M8",
+      "units": 300,
+      "total": 144,
+      "unitPrice": 0.48
+    },
+    {
+      "product": "Screw \"pan head\" M4",
+      "units": 1000,
+      "total": 210,
+      "unitPrice": 0.21
+    }
+  ]
+}

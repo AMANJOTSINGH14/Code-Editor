@@ -53,6 +53,7 @@ async function createRoom(documentId) {
     awareness,
     sockets: new Set(),
     lastPersistedAt: 0,
+    lastAutoSaveAt: 0,
     persistTimer: null,
     cleanupTimer: null,
     lastEditorId: null,
@@ -250,13 +251,20 @@ async function persistRoom(documentId) {
     room.lastPersistedAt = Date.now();
     room.retryCount = 0;
 
-    if (room.lastEditorId) {
+    // Persistence runs every few seconds while people type (data safety), but
+    // an auto-save VERSION is only cut at most once per autoSaveIntervalMs so
+    // the version list doesn't fill up with near-identical snapshots.
+    if (
+      room.lastEditorId &&
+      Date.now() - room.lastAutoSaveAt >= config.yjs.autoSaveIntervalMs
+    ) {
       await createAutoSaveVersion({
         documentId,
         content: Buffer.from(update),
         snapshotText,
         userId: room.lastEditorId
       });
+      room.lastAutoSaveAt = Date.now();
     }
   } catch (error) {
     room.retryCount += 1;

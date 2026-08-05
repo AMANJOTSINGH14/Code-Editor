@@ -1,0 +1,18 @@
+{
+  "serviceCount": 2,
+  "totalReplicas": 1,
+  "services": [
+    {
+      "name": "cluster",
+      "replicas": 0,
+      "envCount": 0,
+      "hasHealthcheck": false
+    },
+    {
+      "name": "services",
+      "replicas": 1,
+      "envCount": 1,
+      "hasHealthcheck": true
+    }
+  ]
+}

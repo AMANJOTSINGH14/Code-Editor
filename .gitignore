@@ -1,9 +1,21 @@
 node_modules/
 dist/
 coverage/
+# Every .env variant, with the *.example templates as the only exception.
+# The narrow ".env" / ".env.local" pair used to be all that was here, and a
+# ".env.backup-preverify" copy of the real file walked straight past it into a
+# commit. Ignore the whole family instead of naming variants one at a time.
 .env
-.env.local
+.env.*
+!.env.example
+!.env.agent-runner.example
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .DS_Store
+
+# Local Chroma server data (created by `chroma run --path .chroma-local`)
+.chroma-local/
+
+# Live verification artifacts (screenshots, downloaded files)
+verification/

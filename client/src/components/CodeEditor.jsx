@@ -49,10 +49,14 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
   const docRef = useRef(null);
   const awarenessRef = useRef(null);
   const typingTimeoutRef = useRef(null);
+  const contentNotifyTimerRef = useRef(null);
   const isTypingRef = useRef(false);
   const cursorLineRef = useRef(1);
   const cursorListenerRef = useRef(null);
   const typingDecorationsRef = useRef([]);
+  const remoteStyleRef = useRef(null);
+  const activeLabelsRef = useRef(new Set());
+  const labelTimersRef = useRef(new Map());
   const [ready, setReady] = useState(false);
 
   const editorOptions = useMemo(
@@ -80,6 +84,10 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
         clearTimeout(typingTimeoutRef.current);
         typingTimeoutRef.current = null;
       }
+      if (contentNotifyTimerRef.current) {
+        clearTimeout(contentNotifyTimerRef.current);
+        contentNotifyTimerRef.current = null;
+      }
       isTypingRef.current = false;
       cursorLineRef.current = 1;
       if (cursorListenerRef.current) {
@@ -93,6 +101,13 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
         bindingRef.current.destroy();
         bindingRef.current = null;
       }
+      if (remoteStyleRef.current) {
+        remoteStyleRef.current.remove();
+        remoteStyleRef.current = null;
+      }
+      labelTimersRef.current.forEach((timerId) => clearTimeout(timerId));
+      labelTimersRef.current.clear();
+      activeLabelsRef.current.clear();
       awareness.destroy();
       doc.destroy();
       docRef.current = null;
@@ -115,10 +130,38 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
     awarenessRef.current.setLocalStateField("cursorLine", cursorLineRef.current);
   }, [user, documentId]);
 
+  /**
+   * Notify the parent of content changes, debounced. Serializing the whole
+   * Yjs text and re-rendering the page on EVERY keystroke makes typing lag
+   * (keys feel stuck / characters appear late), so we coalesce to one
+   * notification shortly after typing pauses. The content is only consumed by
+   * the version-diff preview, which doesn't need per-keystroke freshness.
+   * @returns {void}
+   */
+  const scheduleContentNotify = useCallback(() => {
+    if (!onChange) {
+      return;
+    }
+    if (contentNotifyTimerRef.current) {
+      clearTimeout(contentNotifyTimerRef.current);
+    }
+    contentNotifyTimerRef.current = setTimeout(() => {
+      contentNotifyTimerRef.current = null;
+      if (docRef.current) {
+        onChange(docRef.current.getText("content").toString());
+      }
+    }, 300);
+  }, [onChange]);
+
   const updateTypingDecorations = useCallback(() => {
     const editor = editorRef.current;
     const awareness = awarenessRef.current;
     if (!editor || !awareness) {
+      return;
+    }
+
+    const model = editor.getModel();
+    if (!model) {
       return;
     }
 
@@ -144,12 +187,18 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
 
       const name = userState.name || "Someone";
 
+      // Anchor the label at the END of the line. Injecting it at column 1
+      // pushes the line's real text to the right, which makes typed characters
+      // appear to shift/land in the wrong place while someone else is typing.
+      const line = Math.min(lineNumber, model.getLineCount());
+      const endColumn = model.getLineMaxColumn(line);
+
       decorations.push({
         range: {
-          startLineNumber: lineNumber,
-          startColumn: 1,
-          endLineNumber: lineNumber,
-          endColumn: 1
+          startLineNumber: line,
+          startColumn: endColumn,
+          endLineNumber: line,
+          endColumn: endColumn
         },
         options: {
           isWholeLine: false,
@@ -196,6 +245,105 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
 
     updateTypingDecorations();
   }, [onTypingUsersChange, updateTypingDecorations, user?.id]);
+
+  /**
+   * Inject per-user color + name styles for the remote carets that y-monaco
+   * renders (classes yRemoteSelection-<clientId> / yRemoteSelectionHead-<clientId>).
+   * y-monaco draws the caret/selection decorations but provides no styling.
+   * @returns {void}
+   */
+  const renderRemoteCursorStyles = useCallback(() => {
+    const awareness = awarenessRef.current;
+    const doc = docRef.current;
+    if (!awareness || !doc) {
+      return;
+    }
+
+    if (!remoteStyleRef.current) {
+      const styleEl = document.createElement("style");
+      styleEl.setAttribute("data-yjs-cursors", "");
+      document.head.appendChild(styleEl);
+      remoteStyleRef.current = styleEl;
+    }
+
+    const active = activeLabelsRef.current;
+    const rules = [];
+    awareness.getStates().forEach((state, clientId) => {
+      if (clientId === doc.clientID) {
+        return;
+      }
+      const remoteUser = state?.user;
+      if (!remoteUser) {
+        return;
+      }
+      const color = remoteUser.color || "#38bdf8";
+      const name = String(remoteUser.name || "Someone").replace(/["\\<>]/g, "");
+      // Caret + selection are always visible; the name tag only shows while the
+      // remote user is active and fades out shortly after (Google Docs style).
+      const labelOpacity = active.has(clientId) ? 1 : 0;
+      rules.push(`.yRemoteSelection-${clientId}{background-color:${color}33;}`);
+      rules.push(`.yRemoteSelectionHead-${clientId}{border-left-color:${color};}`);
+      rules.push(
+        `.yRemoteSelectionHead-${clientId}::after{content:"${name}";background-color:${color};opacity:${labelOpacity};}`
+      );
+    });
+
+    remoteStyleRef.current.textContent = rules.join("\n");
+  }, []);
+
+  /**
+   * Mark a remote user as active so their name tag shows, then schedule it to
+   * fade back to just the caret after a short delay.
+   * @param {number} clientId - Remote Yjs client id.
+   * @returns {void}
+   */
+  const markRemoteActive = useCallback(
+    (clientId) => {
+      activeLabelsRef.current.add(clientId);
+      const timers = labelTimersRef.current;
+      if (timers.has(clientId)) {
+        clearTimeout(timers.get(clientId));
+      }
+      timers.set(
+        clientId,
+        setTimeout(() => {
+          activeLabelsRef.current.delete(clientId);
+          timers.delete(clientId);
+          renderRemoteCursorStyles();
+        }, 2500)
+      );
+    },
+    [renderRemoteCursorStyles]
+  );
+
+  /**
+   * Handle awareness changes: surface the name tag for users who just moved or
+   * typed, drop bookkeeping for users who left, then re-render.
+   * @param {{added: number[], updated: number[], removed: number[]}} change - Awareness change.
+   * @returns {void}
+   */
+  const handleAwarenessChange = useCallback(
+    ({ added = [], updated = [], removed = [] }) => {
+      const doc = docRef.current;
+      if (doc) {
+        [...added, ...updated].forEach((clientId) => {
+          if (clientId !== doc.clientID) {
+            markRemoteActive(clientId);
+          }
+        });
+      }
+      removed.forEach((clientId) => {
+        const timers = labelTimersRef.current;
+        if (timers.has(clientId)) {
+          clearTimeout(timers.get(clientId));
+          timers.delete(clientId);
+        }
+        activeLabelsRef.current.delete(clientId);
+      });
+      renderRemoteCursorStyles();
+    },
+    [markRemoteActive, renderRemoteCursorStyles]
+  );
 
   const updateCursorLine = useCallback((lineNumber) => {
     if (!awarenessRef.current || !user) {
@@ -257,18 +405,14 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
         applyAwarenessUpdate(awarenessRef.current, awarenessUpdate, "remote");
       }
       emitTypingUsers();
-      if (onChange) {
-        onChange(docRef.current.getText("content").toString());
-      }
+      scheduleContentNotify();
     };
 
     const handleUpdate = (payload) => {
       if (payload.documentId !== documentId || !docRef.current) return;
       const update = decodeUpdate(payload.update);
       Y.applyUpdate(docRef.current, update, "remote");
-      if (onChange) {
-        onChange(docRef.current.getText("content").toString());
-      }
+      scheduleContentNotify();
     };
 
     const handleAwareness = (payload) => {
@@ -291,7 +435,7 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
       socket.off("awareness:update", handleAwareness);
       socket.off("connect", sendStateVector);
     };
-  }, [socket, documentId, onChange, emitTypingUsers]);
+  }, [socket, documentId, scheduleContentNotify, emitTypingUsers]);
 
   useEffect(() => {
     if (!socket || !docRef.current || !awarenessRef.current) {
@@ -308,9 +452,7 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
         documentId,
         update: encodeUpdate(update)
       });
-      if (onChange && docRef.current) {
-        onChange(docRef.current.getText("content").toString());
-      }
+      scheduleContentNotify();
     };
 
     const handleAwarenessUpdate = ({ added, updated, removed }) => {
@@ -325,12 +467,15 @@ export default function CodeEditor({ documentId, socket, user, language, onChang
 
     doc.on("update", handleDocUpdate);
     awareness.on("update", handleAwarenessUpdate);
+    awareness.on("change", handleAwarenessChange);
+    renderRemoteCursorStyles();
 
     return () => {
       doc.off("update", handleDocUpdate);
       awareness.off("update", handleAwarenessUpdate);
+      awareness.off("change", handleAwarenessChange);
     };
-  }, [socket, documentId, onChange, emitTypingUsers, setLocalTyping]);
+  }, [socket, documentId, scheduleContentNotify, emitTypingUsers, setLocalTyping, renderRemoteCursorStyles, handleAwarenessChange]);
 
   /**
    * Bind Monaco editor to Yjs document on mount.

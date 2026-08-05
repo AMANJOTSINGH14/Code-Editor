@@ -39,8 +39,31 @@ async function getRoomSockets(roomId) {
   }
 }
 
+/**
+ * Get the real local Socket instances in a room. Unlike getRoomSockets
+ * (fetchSockets returns RemoteSockets without custom props), these carry
+ * `socket.user`, so callers can authorize/kick specific users.
+ * @param {string} roomId - Room identifier.
+ * @returns {Array<import("socket.io").Socket>} Local room sockets.
+ */
+function getLocalRoomSockets(roomId) {
+  if (!ioInstance) {
+    return [];
+  }
+  const ids = ioInstance.sockets.adapter.rooms.get(roomId) || new Set();
+  const sockets = [];
+  ids.forEach((id) => {
+    const socket = ioInstance.sockets.sockets.get(id);
+    if (socket) {
+      sockets.push(socket);
+    }
+  });
+  return sockets;
+}
+
 module.exports = {
   setSocketServer,
   emitRoomEvent,
-  getRoomSockets
+  getRoomSockets,
+  getLocalRoomSockets
 };

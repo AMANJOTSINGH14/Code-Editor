@@ -6,7 +6,16 @@
       "PowerShell(cd \"c:\\\\Users\\\\91962\\\\file1\\\\CODE EDITOR\\\\Code-editor\\\\server\"; $env:NODE_ENV=\"test\"; $env:MONGO_URI=\"mongodb://localhost:27017/test\"; $env:JWT_ACCESS_SECRET=\"test-access\"; $env:JWT_REFRESH_SECRET=\"test-refresh\"; $env:GEMINI_API_KEY=\"test-key\"; $env:REDIS_URL=\"\"; npm test -- --testPathPattern=\"unit|integration|socket\" --forceExit 2>&1)",
       "Bash(docker compose *)",
       "Bash(curl -s http://localhost:3001/health)",
-      "Bash(curl -s -o /dev/null -w \"Client HTTP: %{http_code}\\\\n\" http://localhost:3000)"
+      "Bash(curl -s -o /dev/null -w \"Client HTTP: %{http_code}\\\\n\" http://localhost:3000)",
+      "Bash(node -e \"const http=require\\('http'\\);const r=http.get\\('http://localhost:8000/api/v1/heartbeat',res=>{let d='';res.on\\('data',c=>d+=c\\);res.on\\('end',\\(\\)=>console.log\\('STATUS',res.statusCode,d\\)\\)}\\);r.on\\('error',e=>console.log\\('NO SERVER:',e.code\\)\\);r.setTimeout\\(2000,\\(\\)=>{console.log\\('TIMEOUT'\\);r.destroy\\(\\)}\\)\")",
+      "Bash(chroma run *)",
+      "Bash(rm -rf ./.chroma-local)",
+      "Bash(python -c \"import chromadb, os; d=os.path.dirname\\(chromadb.__file__\\); print\\('chromadb at', d\\)\")",
+      "Bash(python -c ' *)",
+      "Bash(where sqlite3.dll)",
+      "Read(//c/Users/91962/anaconda3/Library/bin/**)",
+      "Read(//c/Users/91962/anaconda3/DLLs/**)",
+      "Bash(python -c \"import _sqlite3, os; print\\('_sqlite3 at', _sqlite3.__file__\\)\")"
     ]
   }
 }

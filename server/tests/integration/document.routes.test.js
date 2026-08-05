@@ -55,7 +55,7 @@ test("create, update, get, delete document", async () => {
   expect(deleteRes.status).toBe(204);
 });
 
-test("unauthorized access returns 403", async () => {
+test("unauthorized access to a private doc returns 403", async () => {
   const ownerRes = await agent.post("/api/auth/register").send({
     name: "Owner2",
     email: "owner2@example.com",
@@ -66,7 +66,7 @@ test("unauthorized access returns 403", async () => {
   const docRes = await agent
     .post("/api/documents")
     .set("Authorization", `Bearer ${ownerToken}`)
-    .send({ title: "Private", language: "javascript" });
+    .send({ title: "Private", language: "javascript", isPublic: false });
   const documentId = docRes.body.data.document.id;
 
   const otherRes = await agent.post("/api/auth/register").send({
@@ -79,6 +79,34 @@ test("unauthorized access returns 403", async () => {
   const forbiddenRes = await agent
     .get(`/api/documents/${documentId}`)
     .set("Authorization", `Bearer ${otherToken}`);
-
   expect(forbiddenRes.status).toBe(403);
+});
+
+test("listing only returns the user's own and shared documents", async () => {
+  const ownerRes = await agent.post("/api/auth/register").send({
+    name: "Owner3",
+    email: "owner3@example.com",
+    password: "password123"
+  });
+  const ownerToken = ownerRes.body.data.accessToken;
+
+  // Owner3 creates a public document.
+  await agent
+    .post("/api/documents")
+    .set("Authorization", `Bearer ${ownerToken}`)
+    .send({ title: "Owner3 Public", language: "javascript", isPublic: true });
+
+  const strangerRes = await agent.post("/api/auth/register").send({
+    name: "Stranger",
+    email: "stranger@example.com",
+    password: "password123"
+  });
+  const strangerToken = strangerRes.body.data.accessToken;
+
+  // A stranger who never opened it does not see another user's public doc.
+  const listRes = await agent
+    .get("/api/documents")
+    .set("Authorization", `Bearer ${strangerToken}`);
+  expect(listRes.status).toBe(200);
+  expect(listRes.body.data.documents.length).toBe(0);
 });

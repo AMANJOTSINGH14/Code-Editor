@@ -16,6 +16,6 @@ async function run() {
 }
 
 run().catch((error) => {
-  logger.error({ message: "Embedding failed", error });
+  logger.error({ message: "Embedding failed", error: error.message, stack: error.stack });
   process.exit(1);
 });

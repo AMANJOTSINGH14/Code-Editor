@@ -1,0 +1,1069 @@
+PASS tests/integration/review.routes.edge.test.js (14.771 s)
+  ● Console
+
+    console.warn
+      Using NodeJS below 20.19.0
+
+    [0m [90m 1 |[39m [36mconst[39m mongoose [33m=[39m require([32m"mongoose"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 2 |[39m [36mconst[39m { [33mMongoMemoryServer[39m } [33m=[39m require([32m"mongodb-memory-server"[39m)[33m;[39m
+     [90m   |[39m                               [31m[1m^[22m[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mlet[39m mongoServer [33m=[39m [36mnull[39m[33m;[39m
+     [90m 5 |[39m[0m
+
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoInstance.ts:28:11)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:16:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/index.ts:2:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server/index.js:4:20)
+      at Object.require (tests/testUtils.js:2:31)
+      at Object.require (tests/integration/review.routes.edge.test.js:2:70)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 355.740 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:10.649Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 6.974 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:10.688Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 293.190 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:10.992Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[33m400\u001b[0m 4.113 ms - 212\u001b[0m","timestamp":"2026-07-15T00:17:11.007Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 280.240 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:11.300Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[33m400\u001b[0m 2.707 ms - 260\u001b[0m","timestamp":"2026-07-15T00:17:11.311Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 274.604 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:11.597Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[33m401\u001b[0m 0.890 ms - 87\u001b[0m","timestamp":"2026-07-15T00:17:11.606Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 284.312 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:11.899Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[33m401\u001b[0m 0.974 ms - 87\u001b[0m","timestamp":"2026-07-15T00:17:11.908Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 277.252 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:12.193Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 2.002 ms - 112\u001b[0m","timestamp":"2026-07-15T00:17:12.203Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 275.423 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:12.488Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.611 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:12.495Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 265.318 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:12.768Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"error":{},"level":"error","message":"Unhandled error","timestamp":"2026-07-15T00:17:12.776Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[31m500\u001b[0m 12.050 ms - 1921\u001b[0m","timestamp":"2026-07-15T00:17:12.785Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 266.680 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:13.060Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d1891a60df4e3934778c \u001b[32m200\u001b[0m 1.795 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:13.069Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 273.167 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:13.350Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d1891a60df4e39347791 \u001b[32m200\u001b[0m 1.078 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:13.359Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 352.887 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:13.719Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d1891a60df4e39347796 \u001b[33m401\u001b[0m 0.979 ms - 87\u001b[0m","timestamp":"2026-07-15T00:17:13.733Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 286.681 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:14.030Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d18a1a60df4e3934779b \u001b[32m200\u001b[0m 1.247 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:14.040Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 276.383 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:14.327Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d18a1a60df4e393477a0 \u001b[32m200\u001b[0m 1.262 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:14.335Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 285.134 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:14.627Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d18a1a60df4e393477a5 \u001b[32m200\u001b[0m 1.332 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:14.639Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 260.396 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:14.908Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.344 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:14.915Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.172 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:14.919Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.283 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:14.923Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.440 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:14.927Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.797 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:14.933Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.723 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:14.938Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.303 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:14.942Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.409 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:14.947Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.361 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:14.952Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.280 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:14.956Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 263.272 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:15.225Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.255 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.232Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.546 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.236Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.593 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.240Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.240 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.245Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.435 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.249Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.218 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.253Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.921 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.259Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 2.011 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.265Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.608 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.272Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.539 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.277Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[33m429\u001b[0m 1.251 ms - 92\u001b[0m","timestamp":"2026-07-15T00:17:15.281Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 266.198 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:15.553Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d18b1a60df4e393477b4 \u001b[32m200\u001b[0m 1.008 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:15.560Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d18b1a60df4e393477b4 \u001b[32m200\u001b[0m 1.143 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:15.565Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d18b1a60df4e393477b4 \u001b[32m200\u001b[0m 1.131 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:15.570Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d18b1a60df4e393477b4 \u001b[32m200\u001b[0m 1.032 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:15.575Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d18b1a60df4e393477b4 \u001b[32m200\u001b[0m 1.269 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:15.579Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d18b1a60df4e393477b4 \u001b[32m200\u001b[0m 1.100 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:15.584Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d18b1a60df4e393477b4 \u001b[32m200\u001b[0m 1.297 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:15.589Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d18b1a60df4e393477b4 \u001b[32m200\u001b[0m 1.240 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:15.594Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d18b1a60df4e393477b4 \u001b[32m200\u001b[0m 1.661 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:15.599Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d18b1a60df4e393477b4 \u001b[32m200\u001b[0m 1.181 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:15.605Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d18b1a60df4e393477b4 \u001b[33m429\u001b[0m 1.633 ms - 92\u001b[0m","timestamp":"2026-07-15T00:17:15.610Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 270.423 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:15.888Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.409 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.896Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.605 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.905Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 2.070 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.910Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.690 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.915Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.317 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.921Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.629 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.926Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.651 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.931Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.644 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.936Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.434 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.942Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.787 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:15.947Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 269.137 ms - 347\u001b[0m","timestamp":"2026-07-15T00:17:16.220Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.293 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:16.234Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 281.761 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:16.522Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.696 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:16.531Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.482 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:16.536Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.823 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:16.541Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.409 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:16.547Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.861 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:16.552Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.509 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:16.559Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.807 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:16.565Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 4.685 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:16.575Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.731 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:16.585Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 2.647 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:16.592Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[33m429\u001b[0m 2.203 ms - 92\u001b[0m","timestamp":"2026-07-15T00:17:16.598Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 296.748 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:16.902Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/history?documentId=6a56d18c1a60df4e393477c7 \u001b[32m200\u001b[0m 12.916 ms - 38\u001b[0m","timestamp":"2026-07-15T00:17:16.921Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 264.679 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:17.193Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/history?documentId=6a56d18d1a60df4e393477ce \u001b[32m200\u001b[0m 5.889 ms - 358\u001b[0m","timestamp":"2026-07-15T00:17:17.209Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 263.303 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:17.479Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/history?documentId=6a56d18d1a60df4e393477d9 \u001b[32m200\u001b[0m 4.667 ms - 508\u001b[0m","timestamp":"2026-07-15T00:17:17.491Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 265.341 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:17.764Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/history?documentId=6a56d18d1a60df4e393477e4 \u001b[32m200\u001b[0m 8.314 ms - 4687\u001b[0m","timestamp":"2026-07-15T00:17:17.809Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 271.636 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:18.087Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/history \u001b[33m400\u001b[0m 1.461 ms - 213\u001b[0m","timestamp":"2026-07-15T00:17:18.095Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 275.954 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:18.377Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/history?documentId=6a56d18e1a60df4e39347822 \u001b[33m401\u001b[0m 0.449 ms - 87\u001b[0m","timestamp":"2026-07-15T00:17:18.383Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 271.544 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:18.662Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 267.266 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:18.935Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/history?documentId=6a56d18e1a60df4e39347827 \u001b[33m403\u001b[0m 4.373 ms - 81\u001b[0m","timestamp":"2026-07-15T00:17:18.943Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 276.122 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:19.227Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 268.384 ms - 347\u001b[0m","timestamp":"2026-07-15T00:17:19.503Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/history?documentId=6a56d18f1a60df4e39347830 \u001b[32m200\u001b[0m 4.658 ms - 272\u001b[0m","timestamp":"2026-07-15T00:17:19.513Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 261.141 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:19.779Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 267.541 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:20.056Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 289.857 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:20.364Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 273.990 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:20.650Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 278.314 ms - 361\u001b[0m","timestamp":"2026-07-15T00:17:20.940Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+PASS tests/integration/document.routes.test.js
+  ● Console
+
+    console.warn
+      Using NodeJS below 20.19.0
+
+    [0m [90m 1 |[39m [36mconst[39m mongoose [33m=[39m require([32m"mongoose"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 2 |[39m [36mconst[39m { [33mMongoMemoryServer[39m } [33m=[39m require([32m"mongodb-memory-server"[39m)[33m;[39m
+     [90m   |[39m                               [31m[1m^[22m[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mlet[39m mongoServer [33m=[39m [36mnull[39m[33m;[39m
+     [90m 5 |[39m[0m
+
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoInstance.ts:28:11)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:16:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/index.ts:2:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server/index.js:4:20)
+      at Object.require (tests/testUtils.js:2:31)
+      at Object.require (tests/integration/document.routes.test.js:2:70)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 357.949 ms - 354\u001b[0m","timestamp":"2026-07-15T00:17:23.311Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/documents \u001b[32m201\u001b[0m 11.177 ms - 235\u001b[0m","timestamp":"2026-07-15T00:17:23.333Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPATCH /api/documents/6a56d193d22b0ec6492bb7b6 \u001b[32m200\u001b[0m 11.847 ms - 239\u001b[0m","timestamp":"2026-07-15T00:17:23.350Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/documents/6a56d193d22b0ec6492bb7b6 \u001b[32m200\u001b[0m 4.429 ms - 257\u001b[0m","timestamp":"2026-07-15T00:17:23.359Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mDELETE /api/documents/6a56d193d22b0ec6492bb7b6 \u001b[32m204\u001b[0m 12.021 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:23.375Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 311.663 ms - 359\u001b[0m","timestamp":"2026-07-15T00:17:23.697Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/documents \u001b[32m201\u001b[0m 5.372 ms - 239\u001b[0m","timestamp":"2026-07-15T00:17:23.707Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 271.163 ms - 354\u001b[0m","timestamp":"2026-07-15T00:17:23.981Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/documents/6a56d193d22b0ec6492bb7c3 \u001b[33m403\u001b[0m 3.978 ms - 81\u001b[0m","timestamp":"2026-07-15T00:17:23.989Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 271.601 ms - 359\u001b[0m","timestamp":"2026-07-15T00:17:24.272Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/documents \u001b[32m201\u001b[0m 4.333 ms - 244\u001b[0m","timestamp":"2026-07-15T00:17:24.280Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 267.621 ms - 368\u001b[0m","timestamp":"2026-07-15T00:17:24.552Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/documents \u001b[32m200\u001b[0m 11.839 ms - 40\u001b[0m","timestamp":"2026-07-15T00:17:24.568Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+PASS tests/unit/rag.service.test.js
+  ● Console
+
+    console.warn
+      Using NodeJS below 20.19.0
+
+    [0m [90m 1 |[39m [36mconst[39m mongoose [33m=[39m require([32m"mongoose"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 2 |[39m [36mconst[39m { [33mMongoMemoryServer[39m } [33m=[39m require([32m"mongodb-memory-server"[39m)[33m;[39m
+     [90m   |[39m                               [31m[1m^[22m[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mlet[39m mongoServer [33m=[39m [36mnull[39m[33m;[39m
+     [90m 5 |[39m[0m
+
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoInstance.ts:28:11)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:16:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/index.ts:2:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server/index.js:4:20)
+      at Object.require (tests/testUtils.js:2:31)
+      at Object.require (tests/unit/rag.service.test.js:1:24)
+
+PASS tests/integration/auth.routes.test.js
+  ● Console
+
+    console.warn
+      Using NodeJS below 20.19.0
+
+    [0m [90m 1 |[39m [36mconst[39m mongoose [33m=[39m require([32m"mongoose"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 2 |[39m [36mconst[39m { [33mMongoMemoryServer[39m } [33m=[39m require([32m"mongodb-memory-server"[39m)[33m;[39m
+     [90m   |[39m                               [31m[1m^[22m[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mlet[39m mongoServer [33m=[39m [36mnull[39m[33m;[39m
+     [90m 5 |[39m[0m
+
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoInstance.ts:28:11)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:16:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/index.ts:2:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server/index.js:4:20)
+      at Object.require (tests/testUtils.js:2:31)
+      at Object.require (tests/integration/auth.routes.test.js:2:70)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 306.859 ms - 359\u001b[0m","timestamp":"2026-07-15T00:17:26.931Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/documents \u001b[32m200\u001b[0m 4.974 ms - 40\u001b[0m","timestamp":"2026-07-15T00:17:26.944Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/login \u001b[32m200\u001b[0m 279.948 ms - 359\u001b[0m","timestamp":"2026-07-15T00:17:27.228Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/refresh \u001b[32m200\u001b[0m 6.826 ms - 359\u001b[0m","timestamp":"2026-07-15T00:17:27.240Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+PASS tests/socket/sync.test.js
+  ● Console
+
+    console.warn
+      Using NodeJS below 20.19.0
+
+    [0m [90m 1 |[39m [36mconst[39m mongoose [33m=[39m require([32m"mongoose"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 2 |[39m [36mconst[39m { [33mMongoMemoryServer[39m } [33m=[39m require([32m"mongodb-memory-server"[39m)[33m;[39m
+     [90m   |[39m                               [31m[1m^[22m[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mlet[39m mongoServer [33m=[39m [36mnull[39m[33m;[39m
+     [90m 5 |[39m[0m
+
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoInstance.ts:28:11)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:16:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/index.ts:2:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server/index.js:4:20)
+      at Object.require (tests/testUtils.js:2:31)
+      at Object.require (tests/socket/sync.test.js:4:70)
+
+    console.log
+      {"level":"warn","message":"Redis unavailable, Socket.io running in single-instance mode","timestamp":"2026-07-15T00:17:28.958Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+PASS tests/unit/auth.service.test.js
+  ● Console
+
+    console.warn
+      Using NodeJS below 20.19.0
+
+    [0m [90m 1 |[39m [36mconst[39m mongoose [33m=[39m require([32m"mongoose"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 2 |[39m [36mconst[39m { [33mMongoMemoryServer[39m } [33m=[39m require([32m"mongodb-memory-server"[39m)[33m;[39m
+     [90m   |[39m                               [31m[1m^[22m[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mlet[39m mongoServer [33m=[39m [36mnull[39m[33m;[39m
+     [90m 5 |[39m[0m
+
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoInstance.ts:28:11)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:16:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/index.ts:2:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server/index.js:4:20)
+      at Object.require (tests/testUtils.js:2:31)
+      at Object.require (tests/unit/auth.service.test.js:2:70)
+
+PASS tests/integration/version.routes.test.js
+  ● Console
+
+    console.warn
+      Using NodeJS below 20.19.0
+
+    [0m [90m 1 |[39m [36mconst[39m mongoose [33m=[39m require([32m"mongoose"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 2 |[39m [36mconst[39m { [33mMongoMemoryServer[39m } [33m=[39m require([32m"mongodb-memory-server"[39m)[33m;[39m
+     [90m   |[39m                               [31m[1m^[22m[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mlet[39m mongoServer [33m=[39m [36mnull[39m[33m;[39m
+     [90m 5 |[39m[0m
+
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoInstance.ts:28:11)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:16:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/index.ts:2:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server/index.js:4:20)
+      at Object.require (tests/testUtils.js:2:31)
+      at Object.require (tests/integration/version.routes.test.js:2:70)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 324.255 ms - 354\u001b[0m","timestamp":"2026-07-15T00:17:33.173Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/documents/6a56d19de72a2d58ce8920a8/versions \u001b[32m201\u001b[0m 25.799 ms - 303\u001b[0m","timestamp":"2026-07-15T00:17:33.207Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/documents/6a56d19de72a2d58ce8920a8/versions?page=1&limit=20 \u001b[32m200\u001b[0m 24.533 ms - 313\u001b[0m","timestamp":"2026-07-15T00:17:33.237Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/documents/6a56d19de72a2d58ce8920a8/versions/6a56d19de72a2d58ce8920ac \u001b[32m200\u001b[0m 8.219 ms - 320\u001b[0m","timestamp":"2026-07-15T00:17:33.249Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/documents/6a56d19de72a2d58ce8920a8/versions/6a56d19de72a2d58ce8920ac/restore \u001b[32m200\u001b[0m 31.341 ms - 596\u001b[0m","timestamp":"2026-07-15T00:17:33.288Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mDELETE /api/documents/6a56d19de72a2d58ce8920a8/versions/6a56d19de72a2d58ce8920c6 \u001b[32m204\u001b[0m 10.746 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:33.318Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mDELETE /api/documents/6a56d19de72a2d58ce8920a8/versions/6a56d19de72a2d58ce8920ba \u001b[33m403\u001b[0m 6.129 ms - 103\u001b[0m","timestamp":"2026-07-15T00:17:33.330Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+PASS tests/integration/review.routes.test.js
+  ● Console
+
+    console.warn
+      Using NodeJS below 20.19.0
+
+    [0m [90m 1 |[39m [36mconst[39m mongoose [33m=[39m require([32m"mongoose"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 2 |[39m [36mconst[39m { [33mMongoMemoryServer[39m } [33m=[39m require([32m"mongodb-memory-server"[39m)[33m;[39m
+     [90m   |[39m                               [31m[1m^[22m[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mlet[39m mongoServer [33m=[39m [36mnull[39m[33m;[39m
+     [90m 5 |[39m[0m
+
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoInstance.ts:28:11)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:16:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/index.ts:2:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server/index.js:4:20)
+      at Object.require (tests/testUtils.js:2:31)
+      at Object.require (tests/integration/review.routes.test.js:2:70)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/auth/register \u001b[32m201\u001b[0m 310.206 ms - 354\u001b[0m","timestamp":"2026-07-15T00:17:35.470Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mGET /api/review/stream?documentId=6a56d19f1792c1ed09513cd3 \u001b[32m200\u001b[0m 1.691 ms - -\u001b[0m","timestamp":"2026-07-15T00:17:35.480Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 2.364 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:35.492Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.391 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:35.496Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.438 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:35.501Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.464 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:35.509Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.552 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:35.514Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.410 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:35.519Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.278 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:35.524Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.341 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:35.529Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.474 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:35.534Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[32m200\u001b[0m 1.892 ms - 58\u001b[0m","timestamp":"2026-07-15T00:17:35.539Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"level":"info","message":"\u001b[0mPOST /api/review \u001b[33m429\u001b[0m 1.712 ms - 92\u001b[0m","timestamp":"2026-07-15T00:17:35.545Z","type":"http"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+PASS tests/socket/room.test.js
+  ● Console
+
+    console.warn
+      Using NodeJS below 20.19.0
+
+    [0m [90m 1 |[39m [36mconst[39m mongoose [33m=[39m require([32m"mongoose"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 2 |[39m [36mconst[39m { [33mMongoMemoryServer[39m } [33m=[39m require([32m"mongodb-memory-server"[39m)[33m;[39m
+     [90m   |[39m                               [31m[1m^[22m[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mlet[39m mongoServer [33m=[39m [36mnull[39m[33m;[39m
+     [90m 5 |[39m[0m
+
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoInstance.ts:28:11)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:16:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/index.ts:2:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server/index.js:4:20)
+      at Object.require (tests/testUtils.js:2:31)
+      at Object.require (tests/socket/room.test.js:3:70)
+
+    console.log
+      {"level":"warn","message":"Redis unavailable, Socket.io running in single-instance mode","timestamp":"2026-07-15T00:17:37.071Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+PASS tests/unit/version.service.test.js
+  ● Console
+
+    console.warn
+      Using NodeJS below 20.19.0
+
+    [0m [90m 1 |[39m [36mconst[39m mongoose [33m=[39m require([32m"mongoose"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 2 |[39m [36mconst[39m { [33mMongoMemoryServer[39m } [33m=[39m require([32m"mongodb-memory-server"[39m)[33m;[39m
+     [90m   |[39m                               [31m[1m^[22m[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mlet[39m mongoServer [33m=[39m [36mnull[39m[33m;[39m
+     [90m 5 |[39m[0m
+
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoInstance.ts:28:11)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:16:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/index.ts:2:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server/index.js:4:20)
+      at Object.require (tests/testUtils.js:2:31)
+      at Object.require (tests/unit/version.service.test.js:1:70)
+
+PASS tests/unit/review.service.test.js
+  ● Console
+
+    console.warn
+      Using NodeJS below 20.19.0
+
+    [0m [90m 1 |[39m [36mconst[39m mongoose [33m=[39m require([32m"mongoose"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 2 |[39m [36mconst[39m { [33mMongoMemoryServer[39m } [33m=[39m require([32m"mongodb-memory-server"[39m)[33m;[39m
+     [90m   |[39m                               [31m[1m^[22m[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mlet[39m mongoServer [33m=[39m [36mnull[39m[33m;[39m
+     [90m 5 |[39m[0m
+
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoInstance.ts:28:11)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:16:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/index.ts:2:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server/index.js:4:20)
+      at Object.require (tests/testUtils.js:2:31)
+      at Object.require (tests/unit/review.service.test.js:1:70)
+
+PASS tests/unit/document.service.test.js
+  ● Console
+
+    console.warn
+      Using NodeJS below 20.19.0
+
+    [0m [90m 1 |[39m [36mconst[39m mongoose [33m=[39m require([32m"mongoose"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 2 |[39m [36mconst[39m { [33mMongoMemoryServer[39m } [33m=[39m require([32m"mongodb-memory-server"[39m)[33m;[39m
+     [90m   |[39m                               [31m[1m^[22m[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mlet[39m mongoServer [33m=[39m [36mnull[39m[33m;[39m
+     [90m 5 |[39m[0m
+
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoInstance.ts:28:11)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:16:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/index.ts:2:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server/index.js:4:20)
+      at Object.require (tests/testUtils.js:2:31)
+      at Object.require (tests/unit/document.service.test.js:1:70)
+
+PASS tests/unit/crdt.service.test.js
+  ● Console
+
+    console.warn
+      Using NodeJS below 20.19.0
+
+    [0m [90m 1 |[39m [36mconst[39m mongoose [33m=[39m require([32m"mongoose"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 2 |[39m [36mconst[39m { [33mMongoMemoryServer[39m } [33m=[39m require([32m"mongodb-memory-server"[39m)[33m;[39m
+     [90m   |[39m                               [31m[1m^[22m[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mlet[39m mongoServer [33m=[39m [36mnull[39m[33m;[39m
+     [90m 5 |[39m[0m
+
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoInstance.ts:28:11)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:16:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/index.ts:2:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server/index.js:4:20)
+      at Object.require (tests/testUtils.js:2:31)
+      at Object.require (tests/unit/crdt.service.test.js:3:70)
+
+    console.log
+      {"error":{"_message":"Version validation failed","errors":{"createdBy":{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"user\" (type string) at path \"createdBy\" because of \"BSONError\"","name":"CastError","path":"createdBy","reason":{},"stringValue":"\"user\"","value":"user","valueType":"string"}},"message":"Version validation failed: createdBy: Cast to ObjectId failed for value \"user\" (type string) at path \"createdBy\" because of \"BSONError\"","name":"ValidationError"},"level":"error","message":"Persist failed","timestamp":"2026-07-15T00:17:42.826Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"error":{"_message":"Version validation failed","errors":{"createdBy":{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"user\" (type string) at path \"createdBy\" because of \"BSONError\"","name":"CastError","path":"createdBy","reason":{},"stringValue":"\"user\"","value":"user","valueType":"string"}},"message":"Version validation failed: createdBy: Cast to ObjectId failed for value \"user\" (type string) at path \"createdBy\" because of \"BSONError\"","name":"ValidationError"},"level":"error","message":"Persist failed","timestamp":"2026-07-15T00:17:42.841Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"error":{"_message":"Version validation failed","errors":{"createdBy":{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"user\" (type string) at path \"createdBy\" because of \"BSONError\"","name":"CastError","path":"createdBy","reason":{},"stringValue":"\"user\"","value":"user","valueType":"string"}},"message":"Version validation failed: createdBy: Cast to ObjectId failed for value \"user\" (type string) at path \"createdBy\" because of \"BSONError\"","name":"ValidationError"},"level":"error","message":"Persist failed","timestamp":"2026-07-15T00:17:42.843Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+PASS tests/unit/rag.service.edge.test.js
+  ● Console
+
+    console.warn
+      Using NodeJS below 20.19.0
+
+    [0m [90m 1 |[39m [36mconst[39m mongoose [33m=[39m require([32m"mongoose"[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 2 |[39m [36mconst[39m { [33mMongoMemoryServer[39m } [33m=[39m require([32m"mongodb-memory-server"[39m)[33m;[39m
+     [90m   |[39m                               [31m[1m^[22m[39m
+     [90m 3 |[39m
+     [90m 4 |[39m [36mlet[39m mongoServer [33m=[39m [36mnull[39m[33m;[39m
+     [90m 5 |[39m[0m
+
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoInstance.ts:28:11)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:16:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server-core/src/index.ts:2:1)
+      at Object.<anonymous> (node_modules/mongodb-memory-server/index.js:4:20)
+      at Object.require (tests/testUtils.js:2:31)
+      at Object.require (tests/unit/rag.service.edge.test.js:1:24)
+
+    console.log
+      {"error":"ChromaDB connection failed","level":"warn","message":"RAG retrieval failed, continuing without context","timestamp":"2026-07-15T00:17:43.445Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+    console.log
+      {"error":"ChromaDB connection failed","level":"warn","message":"RAG retrieval failed, continuing without context","timestamp":"2026-07-15T00:17:43.460Z"}
+
+      at Console.log (node_modules/winston/lib/winston/transports/console.js:87:23)
+
+
+Test Suites: 14 passed, 14 total
+Tests:       130 passed, 130 total
+Snapshots:   0 total
+Time:        37.326 s
+Ran all test suites.
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

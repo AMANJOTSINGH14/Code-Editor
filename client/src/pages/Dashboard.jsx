@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import api from "../services/api.js";
@@ -23,7 +23,7 @@ export default function Dashboard() {
    * Fetch accessible documents.
    * @returns {Promise<void>} Resolves when complete.
    */
-  const fetchDocuments = async () => {
+  const fetchDocuments = useCallback(async () => {
     try {
       setError("");
       const response = await api.get("/api/documents");
@@ -33,11 +33,19 @@ export default function Dashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchDocuments();
-  }, []);
+  }, [fetchDocuments]);
+
+  // Refetch when the tab regains focus so visibility changes made elsewhere
+  // (e.g. toggling a room private in the editor) show up without a hard refresh.
+  useEffect(() => {
+    const handleFocus = () => fetchDocuments();
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, [fetchDocuments]);
 
   /**
    * Create a new document.
@@ -77,6 +85,15 @@ export default function Dashboard() {
           <h1 className="text-3xl font-semibold text-slate-100">Hello {user?.name || "there"}</h1>
           <p className="text-sm text-slate-400">Pick a room or start a new session.</p>
         </div>
+        {/* AGENT_RUNNER_START */}
+        <button
+          type="button"
+          onClick={() => navigate("/runs")}
+          className="ml-auto rounded-full border border-sky-400/40 px-4 py-2 text-xs text-sky-300 transition hover:bg-sky-400/10"
+        >
+          Agent Runs →
+        </button>
+        {/* AGENT_RUNNER_END */}
         <button
           type="button"
           onClick={logout}
@@ -188,11 +205,15 @@ export default function Dashboard() {
                     </span>
                   )}
                 </div>
-                {doc.isPublic && (
-                  <span className="mt-2 inline-block rounded-full bg-emerald-400/10 px-2 py-0.5 text-[10px] uppercase text-emerald-300">
-                    Public
-                  </span>
-                )}
+                <span
+                  className={`mt-2 inline-block rounded-full px-2 py-0.5 text-[10px] uppercase ${
+                    doc.isPublic
+                      ? "bg-emerald-400/10 text-emerald-300"
+                      : "bg-slate-700/40 text-slate-300"
+                  }`}
+                >
+                  {doc.isPublic ? "Public" : "Private"}
+                </span>
               </button>
             ))}
           </div>

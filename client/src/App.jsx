@@ -6,6 +6,9 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Editor from "./pages/Editor.jsx";
+// AGENT_RUNNER_START
+import agentRunnerRoutes from "./features/agent-runner/routes.jsx";
+// AGENT_RUNNER_END
 
 /**
  * Guarded route for authenticated pages.
@@ -91,6 +94,9 @@ export default function App() {
                 </PrivateRoute>
               }
             />
+            {/* AGENT_RUNNER_START */}
+            {agentRunnerRoutes(PrivateRoute)}
+            {/* AGENT_RUNNER_END */}
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </BrowserRouter>

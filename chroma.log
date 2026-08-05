@@ -1,0 +1,109 @@
+WARNING:  [03-06-2026 01:14:26] chroma_server_nofile is not supported on Windows. chroma_server_nofile will not be set.
+INFO:     [03-06-2026 01:14:27] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+DEBUG:    [03-06-2026 01:14:27] Starting component System
+DEBUG:    [03-06-2026 01:14:27] Starting component OpenTelemetryClient
+DEBUG:    [03-06-2026 01:14:27] Starting component SqliteDB
+WARNING:  [03-06-2026 01:21:30] chroma_server_nofile is not supported on Windows. chroma_server_nofile will not be set.
+INFO:     [03-06-2026 01:21:30] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+DEBUG:    [03-06-2026 01:21:30] Starting component System
+DEBUG:    [03-06-2026 01:21:30] Starting component OpenTelemetryClient
+DEBUG:    [03-06-2026 01:21:30] Starting component SqliteDB
+WARNING:  [03-06-2026 01:24:46] chroma_server_nofile is not supported on Windows. chroma_server_nofile will not be set.
+INFO:     [03-06-2026 01:24:46] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+DEBUG:    [03-06-2026 01:24:46] Starting component System
+DEBUG:    [03-06-2026 01:24:46] Starting component OpenTelemetryClient
+DEBUG:    [03-06-2026 01:24:46] Starting component SqliteDB
+DEBUG:    [03-06-2026 01:24:47] Starting component SimpleQuotaEnforcer
+DEBUG:    [03-06-2026 01:24:47] Starting component Posthog
+DEBUG:    [03-06-2026 01:24:47] Starting component SimpleRateLimitEnforcer
+DEBUG:    [03-06-2026 01:24:47] Starting component LocalSegmentManager
+DEBUG:    [03-06-2026 01:24:47] Starting component LocalExecutor
+DEBUG:    [03-06-2026 01:24:47] Starting component SegmentAPI
+ERROR:    [03-06-2026 01:24:47] Failed to send telemetry event ServerStartEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:24:47] Started server process [18628]
+INFO:     [03-06-2026 01:24:47] Waiting for application startup.
+INFO:     [03-06-2026 01:24:47] Application startup complete.
+INFO:     [03-06-2026 01:24:47] Uvicorn running on http://localhost:8000 (Press CTRL+C to quit)
+INFO:     [03-06-2026 01:25:10] ::1:56656 - "GET /api/v1/heartbeat HTTP/1.1" 200
+ERROR:    [03-06-2026 01:28:32] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:28:32] ::1:56691 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+DEBUG:    [03-06-2026 01:28:32] Starting component PersistentLocalHnswSegment
+INFO:     [03-06-2026 01:28:33] ::1:56692 - "POST /api/v1/collections/cb98555b-58d6-4970-8822-979813c191b6/upsert HTTP/1.1" 200
+DEBUG:    [03-06-2026 01:28:33] Collection collab_rag_v2 already exists, returning existing collection.
+ERROR:    [03-06-2026 01:28:33] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:28:33] ::1:56691 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+ERROR:    [03-06-2026 01:28:33] Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:28:33] ::1:56692 - "POST /api/v1/collections/cb98555b-58d6-4970-8822-979813c191b6/query HTTP/1.1" 400
+DEBUG:    [03-06-2026 01:29:28] Collection collab_rag_v2 already exists, returning existing collection.
+ERROR:    [03-06-2026 01:29:28] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:29:28] ::1:56703 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [03-06-2026 01:29:28] ::1:56704 - "GET /api/v1/collections/cb98555b-58d6-4970-8822-979813c191b6/count HTTP/1.1" 200
+INFO:     [03-06-2026 01:29:28] ::1:56703 - "POST /api/v1/collections/cb98555b-58d6-4970-8822-979813c191b6/query HTTP/1.1" 200
+INFO:     [03-06-2026 01:29:28] ::1:56704 - "POST /api/v1/collections/cb98555b-58d6-4970-8822-979813c191b6/query HTTP/1.1" 400
+INFO:     [03-06-2026 01:30:33] ::1:56710 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:30:33] ::1:56710 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+DEBUG:    [03-06-2026 01:30:33] Collection collab_rag_v2 already exists, returning existing collection.
+ERROR:    [03-06-2026 01:30:33] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:30:33] ::1:56710 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [03-06-2026 01:30:33] ::1:56710 - "GET /api/v1/collections/cb98555b-58d6-4970-8822-979813c191b6/count HTTP/1.1" 200
+INFO:     [03-06-2026 01:30:33] ::1:56710 - "POST /api/v1/collections/cb98555b-58d6-4970-8822-979813c191b6/query HTTP/1.1" 400
+INFO:     [03-06-2026 01:31:12] ::1:56715 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:31:12] ::1:56715 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+DEBUG:    [03-06-2026 01:31:12] Collection collab_rag_v2 already exists, returning existing collection.
+ERROR:    [03-06-2026 01:31:12] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:31:12] ::1:56715 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [03-06-2026 01:31:12] ::1:56715 - "POST /api/v1/collections/cb98555b-58d6-4970-8822-979813c191b6/query HTTP/1.1" 200
+INFO:     [03-06-2026 01:32:43] ::1:56730 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:32:43] ::1:56730 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+DEBUG:    [03-06-2026 01:32:43] Collection collab_rag_v2 already exists, returning existing collection.
+ERROR:    [03-06-2026 01:32:43] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:32:43] ::1:56730 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [03-06-2026 01:32:44] ::1:56730 - "POST /api/v1/collections/cb98555b-58d6-4970-8822-979813c191b6/upsert HTTP/1.1" 200
+INFO:     [03-06-2026 01:32:44] ::1:56730 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:32:44] ::1:56730 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+DEBUG:    [03-06-2026 01:32:44] Collection collab_rag_v2 already exists, returning existing collection.
+ERROR:    [03-06-2026 01:32:44] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:32:44] ::1:56730 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [03-06-2026 01:32:44] ::1:56730 - "POST /api/v1/collections/cb98555b-58d6-4970-8822-979813c191b6/query HTTP/1.1" 200
+INFO:     [03-06-2026 01:32:44] ::1:56730 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:32:44] ::1:56730 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+DEBUG:    [03-06-2026 01:32:44] Collection collab_rag_v2 already exists, returning existing collection.
+ERROR:    [03-06-2026 01:32:44] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:32:44] ::1:56730 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [03-06-2026 01:32:45] ::1:56730 - "POST /api/v1/collections/cb98555b-58d6-4970-8822-979813c191b6/upsert HTTP/1.1" 200
+INFO:     [03-06-2026 01:32:45] ::1:56730 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:32:45] ::1:56730 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+DEBUG:    [03-06-2026 01:32:45] Collection collab_rag_v2 already exists, returning existing collection.
+ERROR:    [03-06-2026 01:32:45] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:32:45] ::1:56730 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [03-06-2026 01:32:45] ::1:56730 - "GET /api/v1/collections/cb98555b-58d6-4970-8822-979813c191b6/count HTTP/1.1" 200
+INFO:     [03-06-2026 01:32:45] ::1:56730 - "DELETE /api/v1/collections/collab_rag_v2?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [03-06-2026 01:38:44] ::1:56773 - "GET /api/v1/heartbeat HTTP/1.1" 200
+INFO:     [03-06-2026 01:38:44] ::1:56774 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:38:44] ::1:56774 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:38:44] ::1:56774 - "GET /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [03-06-2026 01:47:35] ::1:56883 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:47:35] ::1:56883 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+ERROR:    [03-06-2026 01:47:35] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:47:35] ::1:56883 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+DEBUG:    [03-06-2026 01:47:35] Starting component PersistentLocalHnswSegment
+INFO:     [03-06-2026 01:47:36] ::1:56883 - "POST /api/v1/collections/1ff3c755-8e12-4be8-b1d2-df5aa513f473/upsert HTTP/1.1" 200
+INFO:     [03-06-2026 01:47:36] ::1:56883 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:47:36] ::1:56883 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+DEBUG:    [03-06-2026 01:47:36] Collection collab_rag_v2 already exists, returning existing collection.
+ERROR:    [03-06-2026 01:47:36] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:47:36] ::1:56883 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+ERROR:    [03-06-2026 01:47:36] Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:47:36] ::1:56883 - "POST /api/v1/collections/1ff3c755-8e12-4be8-b1d2-df5aa513f473/query HTTP/1.1" 200
+INFO:     [03-06-2026 01:47:36] ::1:56883 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:47:36] ::1:56883 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:47:36] ::1:56883 - "DELETE /api/v1/collections/collab_rag_v2?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [03-06-2026 01:48:02] ::1:56886 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:48:02] ::1:56886 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+ERROR:    [03-06-2026 01:48:02] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [03-06-2026 01:48:02] ::1:56886 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [03-06-2026 01:48:48] ::1:56892 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:48:48] ::1:56892 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+INFO:     [03-06-2026 01:48:48] ::1:56892 - "GET /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [03-06-2026 01:48:48] ::1:56892 - "GET /api/v1/collections/collab_rag_v2?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [03-06-2026 01:48:48] ::1:56892 - "GET /api/v1/collections/701422da-60b2-40cf-b48a-51fe2c5808d3/count HTTP/1.1" 200

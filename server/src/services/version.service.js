@@ -143,7 +143,7 @@ async function listVersions({ documentId, userId, page, limit }) {
   const total = await Version.countDocuments({ documentId });
   const versions = await Version.find({ documentId })
     .populate("createdBy", "name")
-    .sort({ createdAt: -1 })
+    .sort({ createdAt: -1, versionNumber: -1 })
     .skip((page - 1) * limit)
     .limit(limit);
 

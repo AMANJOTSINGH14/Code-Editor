@@ -142,6 +142,7 @@ async function ensureDocument(documentId, user) {
         content: null,
         snapshotText: ""
       });
+      return document;
     } catch (error) {
       if (error && error.code === 11000) {
         document = await Document.findById(documentId);

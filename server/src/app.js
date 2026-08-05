@@ -61,6 +61,10 @@ app.use("/api/documents", documentRoutes);
 app.use("/api/documents/:id/versions", versionRoutes);
 app.use("/api/review", reviewRoutes);
 
+// AGENT_RUNNER_START
+require("./agent-runner").register(app);
+// AGENT_RUNNER_END
+
 app.use((req, res, next) => {
   next(new AppError("Route not found", 404, "NOT_FOUND"));
 });

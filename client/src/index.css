@@ -54,3 +54,38 @@ body {
   user-select: none;
   pointer-events: none;
 }
+
+/* Remote collaborator cursors rendered by y-monaco.
+   Per-user color and name are injected at runtime in CodeEditor.jsx via the
+   .yRemoteSelection-<id> / .yRemoteSelectionHead-<id> classes. */
+.yRemoteSelection {
+  background-color: rgba(56, 189, 248, 0.2);
+  border-radius: 2px;
+}
+
+.yRemoteSelectionHead {
+  position: absolute;
+  box-sizing: border-box;
+  height: 100%;
+  border-left: 2px solid #38bdf8;
+}
+
+.yRemoteSelectionHead::after {
+  position: absolute;
+  top: -1.45em;
+  left: -2px;
+  content: "";
+  padding: 0 5px;
+  border-radius: 4px 4px 4px 0;
+  background-color: #38bdf8;
+  color: #0b1120;
+  font-size: 11px;
+  line-height: 1.45;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}

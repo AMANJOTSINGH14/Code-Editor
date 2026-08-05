@@ -8,21 +8,34 @@ const {
   selectRelevantChunk,
   buildReviewPrompt,
   retrieveContext,
-  setVectorStoreForTest
+  setVectorStoreForTest,
+  setEmbeddingsClientForTest
 } = require("../../src/services/rag.service");
 
 const mockStore = {
-  similaritySearchWithScore: async () => [
-    [{ pageContent: "Use pagination", metadata: { chunkId: "chunk-1" } }, 0.12]
-  ]
+  ensureCollection: async () => ({
+    query: async () => ({
+      ids: [["chunk-1"]],
+      documents: [["Use pagination"]],
+      metadatas: [[{ chunkId: "chunk-1" }]],
+      distances: [[0.12]]
+    })
+  })
+};
+
+const mockEmbeddings = {
+  embedQuery: async () => [0, 0, 0],
+  embedDocuments: async (texts) => texts.map(() => [0, 0, 0])
 };
 
 beforeEach(() => {
   setVectorStoreForTest(mockStore);
+  setEmbeddingsClientForTest(mockEmbeddings);
 });
 
 afterEach(() => {
   setVectorStoreForTest(null);
+  setEmbeddingsClientForTest(null);
 });
 
 test("estimates tokens", () => {

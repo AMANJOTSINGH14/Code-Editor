@@ -2,7 +2,7 @@ const asyncHandler = require("../utils/asyncHandler");
 const {
   createDocument,
   listDocuments,
-  getDocumentById,
+  openDocument,
   listContributors,
   updateDocument,
   deleteDocument
@@ -53,7 +53,7 @@ const list = asyncHandler(async (req, res) => {
  * @returns {Promise<void>} Response promise.
  */
 const get = asyncHandler(async (req, res) => {
-  const document = await getDocumentById(req.params.id, req.user.id);
+  const document = await openDocument(req.params.id, req.user.id);
   res.status(200).json({
     success: true,
     data: {

@@ -1,0 +1,59 @@
+WARNING:  [07-06-2026 11:58:09] chroma_server_nofile is not supported on Windows. chroma_server_nofile will not be set.
+INFO:     [07-06-2026 11:58:10] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+DEBUG:    [07-06-2026 11:58:10] Starting component System
+DEBUG:    [07-06-2026 11:58:10] Starting component OpenTelemetryClient
+DEBUG:    [07-06-2026 11:58:10] Starting component SqliteDB
+DEBUG:    [07-06-2026 11:58:10] Starting component SimpleQuotaEnforcer
+DEBUG:    [07-06-2026 11:58:10] Starting component Posthog
+DEBUG:    [07-06-2026 11:58:10] Starting component SimpleRateLimitEnforcer
+DEBUG:    [07-06-2026 11:58:10] Starting component LocalSegmentManager
+DEBUG:    [07-06-2026 11:58:10] Starting component LocalExecutor
+DEBUG:    [07-06-2026 11:58:10] Starting component SegmentAPI
+ERROR:    [07-06-2026 11:58:11] Failed to send telemetry event ServerStartEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [07-06-2026 11:58:11] Started server process [16492]
+INFO:     [07-06-2026 11:58:11] Waiting for application startup.
+INFO:     [07-06-2026 11:58:11] Application startup complete.
+INFO:     [07-06-2026 11:58:11] Uvicorn running on http://localhost:8000 (Press CTRL+C to quit)
+INFO:     [07-06-2026 11:58:15] ::1:50829 - "GET /api/v1/heartbeat HTTP/1.1" 200
+INFO:     [07-06-2026 11:58:29] ::1:50831 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [07-06-2026 11:58:29] ::1:50831 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+INFO:     [07-06-2026 11:58:29] ::1:50831 - "DELETE /api/v1/collections/collab_rag_v2?tenant=default_tenant&database=default_database HTTP/1.1" 400
+INFO:     [07-06-2026 11:58:29] ::1:50831 - "GET /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [07-06-2026 12:07:35] ::1:50877 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [07-06-2026 12:07:35] ::1:50877 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+ERROR:    [07-06-2026 12:07:35] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [07-06-2026 12:07:35] ::1:50877 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+DEBUG:    [07-06-2026 12:07:35] Starting component PersistentLocalHnswSegment
+INFO:     [07-06-2026 12:07:35] ::1:50877 - "POST /api/v1/collections/f5f12544-9de4-46e1-99da-19e2b162f0ab/upsert HTTP/1.1" 200
+INFO:     [07-06-2026 12:07:35] ::1:50877 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [07-06-2026 12:07:35] ::1:50877 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+DEBUG:    [07-06-2026 12:07:35] Collection collab_rag_v2 already exists, returning existing collection.
+ERROR:    [07-06-2026 12:07:35] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [07-06-2026 12:07:35] ::1:50877 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+ERROR:    [07-06-2026 12:07:35] Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [07-06-2026 12:07:35] ::1:50877 - "POST /api/v1/collections/f5f12544-9de4-46e1-99da-19e2b162f0ab/query HTTP/1.1" 200
+INFO:     [07-06-2026 12:07:35] ::1:50877 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [07-06-2026 12:07:35] ::1:50877 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+INFO:     [07-06-2026 12:07:35] ::1:50877 - "DELETE /api/v1/collections/collab_rag_v2?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [07-06-2026 13:32:08] ::1:51546 - "GET /api/v1/heartbeat HTTP/1.1" 200
+INFO:     [07-06-2026 13:32:08] ::1:51547 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [07-06-2026 13:32:08] ::1:51547 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+INFO:     [07-06-2026 13:32:08] ::1:51547 - "DELETE /api/v1/collections/collab_rag_v2?tenant=default_tenant&database=default_database HTTP/1.1" 400
+INFO:     [07-06-2026 13:32:08] ::1:51547 - "GET /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [07-06-2026 13:32:23] ::1:51549 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [07-06-2026 13:32:23] ::1:51549 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+ERROR:    [07-06-2026 13:32:23] Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [07-06-2026 13:32:23] ::1:51549 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+DEBUG:    [07-06-2026 13:34:27] Starting component PersistentLocalHnswSegment
+INFO:     [07-06-2026 13:34:27] ::1:51565 - "POST /api/v1/collections/adf32e50-ea4c-471c-bd18-59391736646f/upsert HTTP/1.1" 200
+INFO:     [07-06-2026 13:34:40] ::1:51568 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [07-06-2026 13:34:40] ::1:51568 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+INFO:     [07-06-2026 13:34:40] ::1:51568 - "GET /api/v1/collections/collab_rag_v2?tenant=default_tenant&database=default_database HTTP/1.1" 200
+INFO:     [07-06-2026 13:34:40] ::1:51568 - "GET /api/v1/collections/adf32e50-ea4c-471c-bd18-59391736646f/count HTTP/1.1" 200
+ERROR:    [07-06-2026 13:34:40] Failed to send telemetry event CollectionGetEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [07-06-2026 13:34:40] ::1:51568 - "POST /api/v1/collections/adf32e50-ea4c-471c-bd18-59391736646f/get HTTP/1.1" 200
+INFO:     [07-06-2026 13:35:06] ::1:51572 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+INFO:     [07-06-2026 13:35:06] ::1:51572 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+INFO:     [07-06-2026 13:35:06] ::1:51572 - "GET /api/v1/collections/collab_rag_v2?tenant=default_tenant&database=default_database HTTP/1.1" 200
+ERROR:    [07-06-2026 13:35:06] Failed to send telemetry event CollectionGetEvent: capture() takes 1 positional argument but 3 were given
+INFO:     [07-06-2026 13:35:06] ::1:51572 - "POST /api/v1/collections/adf32e50-ea4c-471c-bd18-59391736646f/get HTTP/1.1" 200

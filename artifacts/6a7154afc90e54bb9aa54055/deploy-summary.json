@@ -1,0 +1,12 @@
+{
+  "serviceCount": 1,
+  "totalReplicas": 1,
+  "services": [
+    {
+      "name": "scheduler",
+      "replicas": 1,
+      "envCount": 1,
+      "hasHealthcheck": true
+    }
+  ]
+}

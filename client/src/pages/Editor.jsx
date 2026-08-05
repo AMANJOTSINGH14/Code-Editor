@@ -4,6 +4,10 @@ import CodeEditor from "../components/CodeEditor.jsx";
 import PresenceBar from "../components/PresenceBar.jsx";
 import ChatPanel from "../components/ChatPanel.jsx";
 import ReviewPanel from "../components/ReviewPanel.jsx";
+// AGENT_RUNNER_START
+import RunCodePanel from "../features/agent-runner/components/RunCodePanel.jsx";
+import VerifyFixPanel from "../features/agent-runner/components/VerifyFixPanel.jsx";
+// AGENT_RUNNER_END
 import VersionHistory from "../components/VersionHistory.jsx";
 import LanguageSelector from "../components/LanguageSelector.jsx";
 import ShareModal from "../components/ShareModal.jsx";
@@ -333,6 +337,10 @@ export default function Editor() {
             {[
               { key: "chat", label: "Chat" },
               { key: "review", label: "AI Review" },
+              // AGENT_RUNNER_START
+              { key: "run", label: "Run" },
+              { key: "verify", label: "Verify" },
+              // AGENT_RUNNER_END
               { key: "versions", label: "Versions" }
             ].map((tab) => (
               <button
@@ -354,6 +362,12 @@ export default function Editor() {
           <div className="flex-1 overflow-hidden">
             {activePanel === "chat" && <ChatPanel documentId={id} socket={socket} user={user} />}
             {activePanel === "review" && <ReviewPanel documentId={id} />}
+            {/* AGENT_RUNNER_START */}
+            {activePanel === "run" && <RunCodePanel code={currentContent} language={language} />}
+            {activePanel === "verify" && (
+              <VerifyFixPanel code={currentContent} language={language} />
+            )}
+            {/* AGENT_RUNNER_END */}
             {activePanel === "versions" && (
               <VersionHistory documentId={id} currentContent={currentContent} language={language} />
             )}

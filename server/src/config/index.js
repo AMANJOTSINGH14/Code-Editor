@@ -32,6 +32,7 @@ const envSchema = z.object({
   YJS_PERSIST_MAX_MS: z.coerce.number().default(30000),
   YJS_ROOM_TTL_MS: z.coerce.number().default(300000),
   AUTO_SAVE_LIMIT: z.coerce.number().default(50),
+  AUTO_SAVE_INTERVAL_MS: z.coerce.number().default(300000),
   LOG_LEVEL: z.string().default("info")
 });
 
@@ -72,7 +73,8 @@ const config = {
     persistDebounceMs: env.YJS_PERSIST_DEBOUNCE_MS,
     persistMaxMs: env.YJS_PERSIST_MAX_MS,
     roomTtlMs: env.YJS_ROOM_TTL_MS,
-    autoSaveLimit: env.AUTO_SAVE_LIMIT
+    autoSaveLimit: env.AUTO_SAVE_LIMIT,
+    autoSaveIntervalMs: env.AUTO_SAVE_INTERVAL_MS
   },
   logLevel: env.LOG_LEVEL
 };
